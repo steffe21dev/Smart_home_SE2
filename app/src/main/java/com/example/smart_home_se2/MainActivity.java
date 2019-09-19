@@ -26,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
         lightThree = findViewById(R.id.switch3);
         lightFour = findViewById(R.id.switch4);
 
+        //Logic for listeners and onclick actions.
+        initializeListeners();
+
 
 
     }
