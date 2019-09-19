@@ -8,15 +8,29 @@ import android.widget.Switch;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    //LIGHT ONE WIDGET
+    Switch lightOne;
+    Switch lightTwo;
+    Switch lightThree;
+    Switch lightFour;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         //LIGHT ONE WIDGET
-        Switch lightOne = findViewById(R.id.switch2);
+        lightOne = findViewById(R.id.switch1);
+        lightTwo = findViewById(R.id.switch2);
+        lightThree = findViewById(R.id.switch3);
+        lightFour = findViewById(R.id.switch4);
 
 
+
+    }
+
+    private void initializeListeners(){
         //DETECT STATE CHANGE OF SWITCH
         lightOne.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -24,11 +38,32 @@ public class MainActivity extends AppCompatActivity {
                 // TODO: 2019-09-11 LOGIK FÖR DB UPPSKICK
             }
         });
+
+        lightTwo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        lightThree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        lightFour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
-    private boolean initializeSwitch(){
+    private void initializeSwitches(){
 
         // TODO: 2019-09-11 Check db which state the button currently is in
-        return Boolean.parseBoolean(null);
+
     }
 }
