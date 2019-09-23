@@ -26,6 +26,8 @@ public class LoginActivity extends AppCompatActivity {
 
         Button button = findViewById(R.id.button);
 
+
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,5 +78,10 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         return null;
+    }
+
+    public void changeColor(){
+
+
     }
 }
