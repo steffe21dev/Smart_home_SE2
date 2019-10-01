@@ -3,10 +3,12 @@ package com.example.smart_home_se2;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -17,14 +19,23 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("loginsave",0);
+        final SharedPreferences.Editor editor = pref.edit();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         final EditText username = findViewById(R.id.editText);
+        // final CheckBox savelogin = findViewById();
 
         final EditText password = findViewById(R.id.editText2);
 
         Button button = findViewById(R.id.button);
+
+        if(pref.getBoolean("remember",false) == true){
+            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+        }
 
 
 
@@ -35,7 +46,15 @@ public class LoginActivity extends AppCompatActivity {
                 String hashedPass = md5Hash(password.getText().toString());
 
                 if (username.getText().toString().equals("admin") && hashedPass.equals("21232f297a57a5a743894a0e4a801fc3")){
-                    Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
+
+                    // TODO: 2019-10-01 VÄNTA PÅ PAOLOS SLOW ASS ATT LÄGGA TILL CHECKBOX. 
+                    /**
+                    if(savelogin.isChecked()){
+                        editor.putBoolean("remember",true);
+                    }
+                     */
+
+                    Toast.makeText(LoginActivity.this, "Sucessful login!", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(LoginActivity.this,MainActivity.class));
                     System.out.println(username.getText() + "" + password.getText());
 
@@ -43,13 +62,14 @@ public class LoginActivity extends AppCompatActivity {
                 }else{
                     System.out.println(username.getText() + "" + password.getText());
 
-                    Toast.makeText(LoginActivity.this, "Login fail", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
     private String md5Hash(String password){
+        // FIXME: 2019-10-01 Be servergrupp att implementera 
         String passwordToHash = password;
         String generatedPassword = null;
         try {
