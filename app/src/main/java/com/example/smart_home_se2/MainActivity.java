@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
         lightOne = findViewById(R.id.switch1);
         lightTwo = findViewById(R.id.switch2);
         lightThree = findViewById(R.id.switch3);
-        lightFour = findViewById(R.id.switch4);
 
         //Logic for listeners and onclick actions.
         initializeListeners();
@@ -50,13 +49,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         lightThree.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-        lightFour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
