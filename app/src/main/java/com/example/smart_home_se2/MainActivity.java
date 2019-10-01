@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.Switch;
 
 public class MainActivity extends AppCompatActivity {
@@ -15,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     Switch lightThree;
     Switch lightFour;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         lightOne = findViewById(R.id.switch1);
         lightTwo = findViewById(R.id.switch2);
         lightThree = findViewById(R.id.switch3);
+
 
         //Logic for listeners and onclick actions.
         initializeListeners();

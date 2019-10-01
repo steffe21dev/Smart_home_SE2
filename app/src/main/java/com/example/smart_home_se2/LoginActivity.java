@@ -33,6 +33,8 @@ public class LoginActivity extends AppCompatActivity {
 
         Button button = findViewById(R.id.button);
 
+        CheckBox rememberMe = findViewById(R.id.checkBox);
+
         if(pref.getBoolean("remember",false) == true){
             startActivity(new Intent(LoginActivity.this,MainActivity.class));
         }
