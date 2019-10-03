@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="#3C3C44">
 
 
     <ImageView
@@ -13,10 +14,12 @@
         android:layout_height="102dp"
         android:layout_marginTop="80dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
+
         android:layout_width="350dp"
         android:layout_height="50dp"
         android:layout_marginStart="30dp"
@@ -27,31 +30,36 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2">
+
+
+
     <LinearLayout
+
+        android:alpha="0.50"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="35dp" />
 
-        <TextView
-            android:layout_width="50dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="16dp"
-            android:text="Garage" />
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="20dp"
+                android:text="Garage"
+                android:layout_weight="1"
+                android:layout_gravity="center"/>
 
-        <Switch
-            android:id="@+id/switch1"
-            android:layout_width="40dp"
-            android:layout_height="15dp"
-            android:layout_marginLeft="160dp"
-            android:layout_marginBottom="30dp"
-            android:gravity="center">
-        </Switch>
+            <Switch
+                android:id="@+id/switch1"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                />
 
-    </LinearLayout>
+
+        </LinearLayout>
+
 
 </androidx.cardview.widget.CardView>
 
@@ -69,27 +77,26 @@
 
 
         <LinearLayout
+            android:background="@drawable/cardview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="35dp" />
 
             <TextView
                 android:layout_width="50dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="16dp"
-                android:text="Garage" />
+                android:layout_height="20dp"
+                android:layout_marginLeft="20dp"
+                android:text="Garage"
+                android:layout_weight="1"
+                android:layout_gravity="center" />
 
             <Switch
                 android:id="@+id/switch2"
-                android:layout_width="40dp"
-                android:layout_height="15dp"
-                android:layout_marginLeft="160dp"
-                android:layout_marginBottom="30dp"
-                android:gravity="center">
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:layout_gravity="center">
             </Switch>
             </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -110,27 +117,26 @@
 
 
         <LinearLayout
+            android:background="@drawable/cardview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="35dp" />
 
             <TextView
                 android:layout_width="50dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="16dp"
-                android:text="Garage" />
+                android:layout_height="20dp"
+                android:layout_marginLeft="20dp"
+                android:text="Garage"
+                android:layout_weight="1"
+                android:layout_gravity="center" />
 
             <Switch
                 android:id="@+id/switch3"
-                android:layout_width="40dp"
-                android:layout_height="15dp"
-                android:layout_marginLeft="160dp"
-                android:layout_marginBottom="30dp"
-                android:gravity="center">
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:layout_gravity="center">
             </Switch>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
