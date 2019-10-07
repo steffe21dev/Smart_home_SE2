@@ -10,6 +10,8 @@ import android.widget.Switch;
 public class MainActivity extends AppCompatActivity {
 
 
+    // TODO: 2019-10-01 SHPAT, fixa inläsning av json i mainactivityn 
+
     //LIGHT ONE WIDGET
     Switch lightOne;
     Switch lightTwo;

@@ -20,24 +20,23 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("loginsave",0);
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("rememberme",0);
         final SharedPreferences.Editor editor = pref.edit();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        if(pref.getBoolean("rem",false) == true){
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        }
+
         final EditText username = findViewById(R.id.editText);
-        // final CheckBox savelogin = findViewById();
 
         final EditText password = findViewById(R.id.editText2);
 
         Button button = findViewById(R.id.button);
 
-        CheckBox rememberMe = findViewById(R.id.checkBox);
-
-        if(pref.getBoolean("remember",false) == true){
-            startActivity(new Intent(LoginActivity.this,MainActivity.class));
-        }
+        final CheckBox rememberMe = findViewById(R.id.checkBox);
 
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -48,12 +47,10 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (username.getText().toString().equals("admin") && hashedPass.equals("21232f297a57a5a743894a0e4a801fc3")){
 
-                    // TODO: 2019-10-01 VÄNTA PÅ PAOLOS SLOW ASS ATT LÄGGA TILL CHECKBOX. 
-                    /**
-                    if(savelogin.isChecked()){
-                        editor.putBoolean("remember",true);
+                    if(rememberMe.isChecked()){
+                        editor.putBoolean("rem",true);
                     }
-                     */
+
 
                     Toast.makeText(LoginActivity.this, "Sucessful login!", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(LoginActivity.this,MainActivity.class));
@@ -70,7 +67,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private String md5Hash(String password){
-        // FIXME: 2019-10-01 Be servergrupp att implementera 
         String passwordToHash = password;
         String generatedPassword = null;
         try {
