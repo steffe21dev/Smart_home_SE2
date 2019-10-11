@@ -24,55 +24,58 @@
         android:id="@+id/editText"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
+        android:layout_marginEnd="96dp"
+        android:layout_marginRight="96dp"
         android:layout_marginBottom="24dp"
-        android:background="@drawable/roundbtn"
         android:drawableLeft="@drawable/username"
         android:ems="10"
-        android:hint="Username"
+        android:text="Username"
         android:textColor="#000000"
+        android:background="@drawable/roundbtn"
         app:layout_constraintBottom_toTopOf="@+id/editText2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
 
         android:id="@+id/editText2"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
+        android:layout_marginEnd="96dp"
+        android:layout_marginRight="96dp"
         android:layout_marginBottom="60dp"
-        android:background="@drawable/roundbtn"
         android:drawableLeft="@drawable/password"
         android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
         android:text="Password"
+        android:inputType="textPassword"
         android:textColor="#000000"
+        android:background="@drawable/roundbtn"
         app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:layout_width="281dp"
         android:layout_height="79dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginRight="56dp"
+        android:layout_marginBottom="244dp"
         android:text="SMARTHOUSE"
         android:textColor="#ffff"
         android:textSize="40dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/editText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <CheckBox
         android:id="@+id/checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="9dp"
+        android:layout_marginEnd="143dp"
+        android:layout_marginRight="143dp"
         android:layout_marginBottom="19dp"
         android:text="Remember me"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
