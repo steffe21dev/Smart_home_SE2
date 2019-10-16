@@ -43,36 +43,13 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
 
         //Logic for listeners and onclick actions.
-        initializeListeners();
 
 
 
     }
 
 
-    private void initializeListeners(){
-        //DETECT STATE CHANGE OF SWITCH
-        lightOne.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO: 2019-09-11 LOGIK FÖR DB UPPSKICK
-            }
-        });
 
-        lightTwo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-        lightThree.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-    }
 
     private void initializeSwitches(){
 
