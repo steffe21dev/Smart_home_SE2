@@ -2,6 +2,7 @@ package com.example.smart_home_se2.Utility;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.util.Base64;
 import android.util.Log;
 
 import com.example.smart_home_se2.MainActivity;
@@ -19,19 +20,41 @@ import java.net.URL;
 
 public class APIHandler {
 
+
+
     private static APIHandler apiHandler = null;
 
     //Enter Host ip adress of server.
-    String hostIP = "";
-    String url = "http://"+hostIP+":8080/SmartHouse/";
+    String hostIP = "localhost";
+    String url = "http://"+hostIP+":8080/SmartHouseApi/";
     static User user_acc = null;
+    static Device device = null;
 
 
 
     //
-    public User login(String email){
+    public User login(String email,String pass){
+
+        // TODO: 2019-10-21 Fix
+        /**
+        String name = email;
+        String password = pass;
+        String authString = name + ":" + password;
+        byte[] authStringEnc = Base64.encode(authString.getBytes(),Base64.DEFAULT);
+        System.out.println("Base64 encoded auth string: " + authStringEnc);
+
+        Client client = ClientBuilder.newClient();
+        WebTarget baseTarget = client.target("http://amirs-air-1405.lan:8080/SmartHouseApi/%22);
+
+
+
         new JsonTask().execute(url+"login/" +  email + "");
+
         return user_acc;
+
+         */
+
+        return null;
     }
 
 
@@ -102,12 +125,28 @@ public class APIHandler {
         }
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(String result, String type) {
             super.onPostExecute(result);
 
             Gson gson = new Gson();
-            JsonParser parser = new JsonParser();
-            JsonObject object = (JsonObject) parser.parse(result);
+
+
+            switch (type){
+                case "user":
+                    JsonParser parser = new JsonParser();
+                    JsonObject object = (JsonObject) parser.parse(result);
+                    user_acc = gson.fromJson(object,User.class);
+                    break;
+
+                case "device":
+                    JsonObject obj = new JsonObject(result);
+                    device = gson.fromJson(obj,Device.class);
+                    break;
+
+                default:
+                    System.out.println("Error wrong type!");
+                    break;
+            }
             user_acc = gson.fromJson(object,User.class);
 
         }
