@@ -1,19 +1,22 @@
 package com.example.smart_home_se2;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.CheckBox;
 import android.widget.Switch;
+import android.widget.Toast;
 
+import com.example.smart_home_se2.Utility.APIHandler;
+import com.example.smart_home_se2.Utility.Device;
 import com.example.smart_home_se2.ui.dashboard.DashboardFragment;
 import com.example.smart_home_se2.ui.home.HomeFragment;
 import com.example.smart_home_se2.ui.notifications.NotificationsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,7 +46,16 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
 
         //Logic for listeners and onclick actions.
+        ArrayList<Device> devices = APIHandler.getInstance().devices(this);
 
+        try {
+            for (int i = 0; i < devices.size(); i++){
+                devices.get(i);
+            }
+        }catch (NullPointerException e){
+            Toast.makeText(this, "Nullpointer", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
 
 
     }

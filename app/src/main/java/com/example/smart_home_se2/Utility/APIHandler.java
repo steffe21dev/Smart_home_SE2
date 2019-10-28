@@ -1,39 +1,83 @@
 package com.example.smart_home_se2.Utility;
 
-import android.app.ProgressDialog;
-import android.os.AsyncTask;
+import android.content.Context;
 import android.util.Base64;
-import android.util.Log;
 
-import com.example.smart_home_se2.MainActivity;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class APIHandler {
 
 
 
-    private static APIHandler apiHandler = null;
+    private static APIHandler apiHandler;
 
     //Enter Host ip adress of server.
-    String hostIP = "localhost";
+    String hostIP = "192.168.1.232";
     String url = "http://"+hostIP+":8080/SmartHouseApi/";
     static User user_acc = null;
     static Device device = null;
+    RequestQueue queue;
+    ArrayList<Device> devices;
 
 
+
+
+
+    public ArrayList<Device> devices(Context context){
+
+        queue = Volley.newRequestQueue(context);
+        String new_url = url + "devices";
+
+        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, new_url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray jsonArray = response.getJSONArray("");
+
+
+                    for(int i = 0; i < jsonArray.length(); i++){
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                        String deviceId = jsonObject.getString("deviceId");
+                        String deviceName = jsonObject.getString("deviceName");
+                        String deviceStatus = jsonObject.getString("deviceStatus");
+
+                        devices.add(new Device(deviceName,deviceStatus,deviceId));
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        return devices;
+    }
 
     //
     public User login(String email,String pass){
+
+        User user = null;
+
+
+        String authString = email + ":" + pass;
+        byte[] authStringEnc = Base64.encode(authString.getBytes(),Base64.DEFAULT);
 
         // TODO: 2019-10-21 Fix
         /**
@@ -54,8 +98,12 @@ public class APIHandler {
 
          */
 
-        return null;
+        return user;
     }
+
+
+
+
 
 
 
@@ -70,91 +118,11 @@ public class APIHandler {
 
 
 
-    private class JsonTask extends AsyncTask<String, String, String> {
-
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-        }
-
-        protected String doInBackground(String... params) {
-
-
-            HttpURLConnection connection = null;
-            BufferedReader reader = null;
-
-            try {
-                URL url = new URL(params[0]);
-                connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-
-
-                InputStream stream = connection.getInputStream();
-
-                reader = new BufferedReader(new InputStreamReader(stream));
-
-                StringBuffer buffer = new StringBuffer();
-                String line = "";
-
-                while ((line = reader.readLine()) != null) {
-                    buffer.append(line + "\n");
-                    Log.d("Response: ", "> " + line);   //here u ll get whole response...... :-)
-
-                }
-
-                return buffer.toString();
-
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                if (connection != null) {
-                    connection.disconnect();
-                }
-                try {
-                    if (reader != null) {
-                        reader.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String result, String type) {
-            super.onPostExecute(result);
-
-            Gson gson = new Gson();
-
-
-            switch (type){
-                case "user":
-                    JsonParser parser = new JsonParser();
-                    JsonObject object = (JsonObject) parser.parse(result);
-                    user_acc = gson.fromJson(object,User.class);
-                    break;
-
-                case "device":
-                    JsonObject obj = new JsonObject(result);
-                    device = gson.fromJson(obj,Device.class);
-                    break;
-
-                default:
-                    System.out.println("Error wrong type!");
-                    break;
-            }
-            user_acc = gson.fromJson(object,User.class);
-
-        }
 
 
     }
 
-}
+
 
 
 

@@ -12,6 +12,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.smart_home_se2.Utility.APIHandler;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -46,6 +48,10 @@ public class LoginActivity extends AppCompatActivity {
                 String hashedPass = md5Hash(password.getText().toString());
 
                 if (username.getText().toString().equals("admin") && hashedPass.equals("21232f297a57a5a743894a0e4a801fc3")){
+
+
+                    APIHandler.getInstance().login(username.getText().toString(),password.getText().toString());
+
 
                     if(rememberMe.isChecked()){
                         editor.putBoolean("rem",true);
