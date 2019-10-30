@@ -5,6 +5,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -18,6 +19,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class APIHandler {
 
@@ -122,10 +125,24 @@ public class APIHandler {
     public User login(String email,String pass){
 
         User user = null;
+        String new_url = url + "login/" + email;
 
 
         String authString = email + ":" + pass;
         byte[] authStringEnc = Base64.encode(authString.getBytes(),Base64.DEFAULT);
+
+
+        final JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
 
         // TODO: 2019-10-21 Fix
         /**
@@ -147,6 +164,17 @@ public class APIHandler {
          */
 
         return user;
+    }
+
+
+    public Map getHeaders()throws AuthFailureError {
+
+        HashMap headers = new HashMap();
+        headers.put("Content-Type", "application/json");
+        headers.put("apiKey", "xxxxxxxxxxxxxxx");
+
+        return headers;
+
     }
 
 
