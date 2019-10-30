@@ -2,6 +2,7 @@ package com.example.smart_home_se2;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -23,7 +24,6 @@ import androidx.fragment.app.Fragment;
 public class MainActivity extends AppCompatActivity {
 
 
-    // TODO: 2019-10-01 SHPAT, fixa inläsning av json i mainactivityn 
 
     //LIGHT ONE WIDGET
     Switch lightOne;
@@ -51,20 +51,50 @@ public class MainActivity extends AppCompatActivity {
 
         //Logic for listeners and onclick actions.
 
+        initializeDevices();
+        initializeListeners();
+
+
+
+    }
+
+
+    private void initializeDevices(){
         ArrayList<Device> devices = APIHandler.getInstance().devices(this);
 
         try {
             for (int i = 0; i < devices.size(); i++){
-                devices.get(i).toString();
+                if(devices.get(i).getDeviceId().equals("1")){
+                    if(devices.get(i).getDeviceStatus().equals("OFF")){
+                        lightOne.setChecked(false);
+                    }
+                    else {
+                        lightOne.setChecked(true);
+                    }
+                }
             }
         }catch (NullPointerException e){
             Toast.makeText(this, "Nullpointer", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
-
-
     }
 
+
+    private void initializeListeners(){
+        lightOne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(lightOne.isChecked()){
+                    devices.get(1).setDeviceStatus("OFF");
+                    APIHandler.getInstance().changeStateDevice(devices.get(1),getApplicationContext());
+                }
+                else{
+                    devices.get(1).setDeviceStatus("ON");
+                    APIHandler.getInstance().changeStateDevice(devices.get(1),getApplicationContext());
+                }
+            }
+        });
+    }
 
 
 

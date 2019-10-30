@@ -2,12 +2,15 @@ package com.example.smart_home_se2.Utility;
 
 import android.content.Context;
 import android.util.Base64;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -31,6 +34,42 @@ public class APIHandler {
     ArrayList<Device> devices = new ArrayList<>();
 
 
+
+
+
+
+    public void changeStateDevice(Device device, final Context context){
+        String new_url = url + "devices/";
+
+        final JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.put("deviceId",String.valueOf(device.getDeviceId()));
+            jsonObject.put("deviceName",device.deviceName);
+            jsonObject.put("deviceStatus",device.getDeviceStatus());
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, new_url, jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Toast.makeText(context, "Success!", Toast.LENGTH_SHORT).show();
+                Log.d("Response",response.toString());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Error!", Toast.LENGTH_SHORT).show();
+                Log.d("Response",error.toString());
+            }
+        });
+
+        RequestSingleton.getInstance(context).addToRequestQueue(jsonObjectRequest);
+
+    }
 
 
     public ArrayList<Device> devices(Context context){
