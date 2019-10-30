@@ -51,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
 
         //Logic for listeners and onclick actions.
 
-        initializeDevices();
-        initializeListeners();
+        //initializeDevices();
+        //initializeListeners();
 
 
 
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void initializeDevices(){
-        ArrayList<Device> devices = APIHandler.getInstance().devices(this);
+        devices = APIHandler.getInstance().devices(this);
 
         try {
             for (int i = 0; i < devices.size(); i++){

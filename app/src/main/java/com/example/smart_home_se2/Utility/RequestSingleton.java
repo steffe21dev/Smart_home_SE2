@@ -38,4 +38,11 @@ public class RequestSingleton {
     public<T> void addToRequestQueue(Request<T> request){
         requestQueue.add(request);
     }
+
+
+    public<T> void addToRequestQueue(Request<T> request,String tag){
+        request.setTag(tag);
+        requestQueue.add(request);
+    }
+
 }

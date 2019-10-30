@@ -1,7 +1,7 @@
 package com.example.smart_home_se2.Utility;
 
 import android.content.Context;
-import android.util.Base64;
+import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -19,8 +19,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+
+import androidx.annotation.RequiresApi;
 
 public class APIHandler {
 
@@ -35,6 +38,8 @@ public class APIHandler {
     static Device device = null;
     RequestQueue queue;
     ArrayList<Device> devices = new ArrayList<>();
+    static User user = null;
+
 
 
 
@@ -122,60 +127,52 @@ public class APIHandler {
     }
 
     //
-    public User login(String email,String pass){
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public User login(String email, String pass, Context context){
 
-        User user = null;
         String new_url = url + "login/" + email;
 
 
-        String authString = email + ":" + pass;
-        byte[] authStringEnc = Base64.encode(authString.getBytes(),Base64.DEFAULT);
+        final String authString = email + ":" + pass;
+        final String authStringEnc = Base64.getEncoder().encodeToString(authString.getBytes());
 
-
-        final JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        final JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, new_url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-
+                try {
+                    user = new User(response.getString("firstName"),response.getString("lastName"),response.getString("emailAddress"),null);
+                    System.out.println(user.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                System.out.println(error.toString());
+                System.out.println(authStringEnc);
+            }
+        }){
+
+            @Override
+            public Map getHeaders()throws AuthFailureError {
+
+                HashMap headers = new HashMap();
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", "Basic " + authStringEnc);
+
+                return headers;
 
             }
-        });
-
-        // TODO: 2019-10-21 Fix
-        /**
-        String name = email;
-        String password = pass;
-        String authString = name + ":" + password;
-        byte[] authStringEnc = Base64.encode(authString.getBytes(),Base64.DEFAULT);
-        System.out.println("Base64 encoded auth string: " + authStringEnc);
-
-        Client client = ClientBuilder.newClient();
-        WebTarget baseTarget = client.target("http://amirs-air-1405.lan:8080/SmartHouseApi/%22);
 
 
+        };
 
-        new JsonTask().execute(url+"login/" +  email + "");
-
-        return user_acc;
-
-         */
-
+        RequestSingleton.getInstance(context).addToRequestQueue(objectRequest,"headerRequest");
         return user;
     }
 
-
-    public Map getHeaders()throws AuthFailureError {
-
-        HashMap headers = new HashMap();
-        headers.put("Content-Type", "application/json");
-        headers.put("apiKey", "xxxxxxxxxxxxxxx");
-
-        return headers;
-
-    }
 
 
 
