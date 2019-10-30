@@ -7,7 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -24,11 +24,11 @@ public class APIHandler {
 
     //Enter Host ip adress of server.
     String hostIP = "192.168.1.232";
-    String url = "https://"+hostIP+":8080/SmartHouseApi/";
+    String url = "http://"+hostIP+":8080/SmartHouseApi/";
     static User user_acc = null;
     static Device device = null;
     RequestQueue queue;
-    ArrayList<Device> devices;
+    ArrayList<Device> devices = new ArrayList<>();
 
 
 
@@ -40,17 +40,17 @@ public class APIHandler {
 
         System.out.println(new_url);
 
-        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, new_url, null, new Response.Listener<JSONObject>() {
+
+        final JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, new_url, null, new Response.Listener<JSONArray>() {
             @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray jsonArray = response.getJSONArray("");
-                    devices = new ArrayList<>();
+            public void onResponse(JSONArray response) {
 
-                    for(int i = 0; i < jsonArray.length(); i++){
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                for(int i = 0; i < response.length(); i++){
+                    try {
+                        JSONObject jsonObject = response.getJSONObject(i);
 
-                        String deviceId = jsonObject.getString("deviceID");
+
+                        String deviceId = jsonObject.getString("deviceId");
                         String deviceName = jsonObject.getString("deviceName");
                         String deviceStatus = jsonObject.getString("deviceStatus");
 
@@ -59,11 +59,12 @@ public class APIHandler {
                         System.out.println(deviceStatus);
 
                         devices.add(new Device(deviceName,deviceStatus,deviceId));
-                    }
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -72,7 +73,7 @@ public class APIHandler {
             }
         });
 
-        RequestSingleton.getInstance(context).addToRequestQueue(request);
+        RequestSingleton.getInstance(context).addToRequestQueue(jsonArrayRequest);
 
         return devices;
 
