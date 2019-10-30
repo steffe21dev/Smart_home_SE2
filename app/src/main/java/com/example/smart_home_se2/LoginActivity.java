@@ -1,7 +1,5 @@
 package com.example.smart_home_se2;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,10 +10,23 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.smart_home_se2.Utility.APIHandler;
+import com.example.smart_home_se2.Utility.Device;
+import com.example.smart_home_se2.Utility.RequestSingleton;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -24,6 +35,45 @@ public class LoginActivity extends AppCompatActivity {
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("rememberme",0);
         final SharedPreferences.Editor editor = pref.edit();
+        ArrayList<Device> list = new ArrayList<>();
+
+
+
+        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, "https://api.myjson.com/bins/kp9wz", null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray jsonArray = response.getJSONArray("employees");
+
+                    System.out.println(response.toString());
+                    for(int i = 0; i < jsonArray.length(); i++){
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                        String deviceId = jsonObject.getString("firstname");
+                        String deviceName = jsonObject.getString("age");
+                        String deviceStatus = jsonObject.getString("mail");
+
+
+                        System.out.println(jsonObject.getString("firstname"));
+                        System.out.println(jsonObject.getString("age"));
+                        System.out.println(jsonObject.getString("mail"));
+
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                System.out.println("Gay");
+            }
+        });
+
+        RequestSingleton.getInstance(this).addToRequestQueue(request);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -64,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                 }else{
-                    System.out.println(username.getText() + "" + password.getText());
+                    System.out.println(username.getText() + " " + password.getText());
 
                     Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
                 }
@@ -103,8 +153,7 @@ public class LoginActivity extends AppCompatActivity {
         return null;
     }
 
-    public void changeColor(){
 
-
-    }
 }
+
+

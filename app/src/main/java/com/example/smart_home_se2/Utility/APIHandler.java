@@ -24,12 +24,11 @@ public class APIHandler {
 
     //Enter Host ip adress of server.
     String hostIP = "192.168.1.232";
-    String url = "http://"+hostIP+":8080/SmartHouseApi/";
+    String url = "https://"+hostIP+":8080/SmartHouseApi/";
     static User user_acc = null;
     static Device device = null;
     RequestQueue queue;
     ArrayList<Device> devices;
-
 
 
 
@@ -39,19 +38,25 @@ public class APIHandler {
         queue = Volley.newRequestQueue(context);
         String new_url = url + "devices";
 
+        System.out.println(new_url);
+
         final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, new_url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
                     JSONArray jsonArray = response.getJSONArray("");
-
+                    devices = new ArrayList<>();
 
                     for(int i = 0; i < jsonArray.length(); i++){
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                        String deviceId = jsonObject.getString("deviceId");
+                        String deviceId = jsonObject.getString("deviceID");
                         String deviceName = jsonObject.getString("deviceName");
                         String deviceStatus = jsonObject.getString("deviceStatus");
+
+                        System.out.println(deviceId);
+                        System.out.println(deviceName);
+                        System.out.println(deviceStatus);
 
                         devices.add(new Device(deviceName,deviceStatus,deviceId));
                     }
@@ -67,7 +72,10 @@ public class APIHandler {
             }
         });
 
+        RequestSingleton.getInstance(context).addToRequestQueue(request);
+
         return devices;
+
     }
 
     //

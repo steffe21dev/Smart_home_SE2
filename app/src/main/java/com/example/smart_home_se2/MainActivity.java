@@ -5,6 +5,8 @@ import android.view.MenuItem;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.example.smart_home_se2.Utility.APIHandler;
 import com.example.smart_home_se2.Utility.Device;
 import com.example.smart_home_se2.ui.dashboard.DashboardFragment;
@@ -28,12 +30,14 @@ public class MainActivity extends AppCompatActivity {
     Switch lightTwo;
     Switch lightThree;
     Switch lightFour;
+    ArrayList<Device> devices;
 
     BottomNavigationView bottomNavigationView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        RequestQueue queue = Volley.newRequestQueue(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -46,11 +50,12 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
 
         //Logic for listeners and onclick actions.
+
         ArrayList<Device> devices = APIHandler.getInstance().devices(this);
 
         try {
             for (int i = 0; i < devices.size(); i++){
-                devices.get(i);
+                devices.get(i).toString();
             }
         }catch (NullPointerException e){
             Toast.makeText(this, "Nullpointer", Toast.LENGTH_SHORT).show();
@@ -62,12 +67,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-    private void initializeSwitches(){
-
-        // TODO: 2019-09-11 Check db which state the button currently is in
-
-    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
 
@@ -103,5 +102,9 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             };
+
+
+
+
 
 }
