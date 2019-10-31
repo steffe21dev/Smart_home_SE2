@@ -22,30 +22,34 @@ public class LoginActivity extends AppCompatActivity {
 
     User user = null;
     Context context;
+    SharedPreferences pref;
+    SharedPreferences.Editor editor;
+    CheckBox rememberMe;
+    EditText username;
+    EditText password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         context = this;
-
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("rememberme",0);
-        final SharedPreferences.Editor editor = pref.edit();
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        if(pref.getBoolean("rem",false) == true){
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-        }
+        pref = getApplicationContext().getSharedPreferences("rememberme",0);
+        editor = pref.edit();
 
-        final EditText username = findViewById(R.id.editText);
+        username = findViewById(R.id.editText);
 
-        final EditText password = findViewById(R.id.editText2);
+        password = findViewById(R.id.editText2);
 
         Button button = findViewById(R.id.button);
 
-        final CheckBox rememberMe = findViewById(R.id.checkBox);
+        rememberMe = findViewById(R.id.checkBox);
 
+
+        if(pref.getBoolean("rem",false) == true){
+            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+        }
 
         button.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -55,13 +59,8 @@ public class LoginActivity extends AppCompatActivity {
                 user = APIHandler.getInstance().login(username.getText().toString(),password.getText().toString(),context);
 
 
-                try{
-                if(user.getEmail().equals(username.getText().toString())){
-                    startActivity(new Intent(LoginActivity.this,MainActivity.class));
-                    Toast.makeText(context, "Success!", Toast.LENGTH_SHORT).show();
-                }}catch (NullPointerException e){
-                    Toast.makeText(context, "Failed Login", Toast.LENGTH_SHORT).show();
-                }
+
+                login();
 
 
 
@@ -72,7 +71,27 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+private void login(){
 
+    try{
+        if(user.getEmail().equals(username.getText().toString())){
+
+            if(rememberMe.isChecked()) {
+                editor.putBoolean("rem", true).commit();
+            }
+
+
+            editor.putString("username",user.getEmail()).commit();
+            editor.putString("firstname",user.getFirstName()).commit();
+            editor.putString("lastname",user.getLastName()).commit();
+            editor.putString("password",password.getText().toString()).commit();
+            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+            Toast.makeText(context, "Success!", Toast.LENGTH_SHORT).show();
+        }}catch (NullPointerException e){
+        Toast.makeText(context, "Failed Login", Toast.LENGTH_SHORT).show();
+    }
+
+}
 
 }
 

@@ -1,5 +1,6 @@
 package com.example.smart_home_se2.Utility;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
@@ -39,6 +40,8 @@ public class APIHandler {
     RequestQueue queue;
     ArrayList<Device> devices = new ArrayList<>();
     static User user = null;
+
+    ProgressDialog mProgressDialog;
 
 
 
@@ -130,6 +133,13 @@ public class APIHandler {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public User login(String email, String pass, Context context){
 
+
+        mProgressDialog = new ProgressDialog(context);
+
+        mProgressDialog.setIndeterminate(true);
+        mProgressDialog.setMessage("Loading...");
+        mProgressDialog.show();
+
         String new_url = url + "login/" + email;
 
 
@@ -142,6 +152,7 @@ public class APIHandler {
                 try {
                     user = new User(response.getString("firstName"),response.getString("lastName"),response.getString("emailAddress"),null);
                     System.out.println(user.toString());
+                    mProgressDialog.dismiss();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -170,7 +181,9 @@ public class APIHandler {
         };
 
         RequestSingleton.getInstance(context).addToRequestQueue(objectRequest,"headerRequest");
+
         return user;
+
     }
 
 
