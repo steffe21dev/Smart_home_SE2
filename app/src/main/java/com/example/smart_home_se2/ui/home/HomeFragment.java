@@ -3,6 +3,7 @@ package com.example.smart_home_se2.ui.home;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +39,9 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
 
+
+
+
         context = this.getContext();
 
         devices = APIHandler.getInstance().devices(context);
@@ -54,8 +58,21 @@ public class HomeFragment extends Fragment {
         textView.setGravity(Gravity.CENTER);
 
 
-        initializeDevices();
+        final Handler handler = new Handler();
+
+        final Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                handler.postDelayed(this,500);
+                initializeDevices();
+            }
+        };
+        runnable.run();
+
+
         initializeListeners(context);
+
+
 
 
 

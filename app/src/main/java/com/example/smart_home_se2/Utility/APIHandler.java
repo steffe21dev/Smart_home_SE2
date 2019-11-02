@@ -98,7 +98,6 @@ public class APIHandler {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, new_url, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Toast.makeText(context, "Success!", Toast.LENGTH_SHORT).show();
                 Log.d("Response",response.toString());
             }
         }, new Response.ErrorListener() {

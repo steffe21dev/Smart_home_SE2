@@ -12,10 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.smart_home_se2.Utility.APIHandler;
-import com.example.smart_home_se2.Utility.Device;
 import com.example.smart_home_se2.Utility.User;
-
-import java.util.ArrayList;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,10 +27,12 @@ public class LoginActivity extends AppCompatActivity {
     CheckBox rememberMe;
     EditText username;
     EditText password;
+    Boolean legit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        legit = false;
         context = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -60,14 +59,12 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 user = APIHandler.getInstance().login(username.getText().toString(),password.getText().toString(),context);
-                ArrayList<Device> devices = APIHandler.getInstance().devices(context);
 
-
-                for (Device d: devices) {
-                    System.out.println(d.toString());
-                }
 
                 login();
+
+
+
 
 
 
