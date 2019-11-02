@@ -50,7 +50,7 @@ public class APIHandler {
 
 
     public void changeStateDevice(Device device, final Context context){
-        String new_url = url + "devices/";
+        String new_url = url + "devices/"+device.getDeviceId();
 
         final JSONObject jsonObject = new JSONObject();
 

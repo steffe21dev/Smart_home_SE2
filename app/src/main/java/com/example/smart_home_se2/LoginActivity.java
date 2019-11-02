@@ -20,7 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class LoginActivity extends AppCompatActivity {
 
 
-    User user = null;
+    static User user = null;
     Context context;
     SharedPreferences pref;
     SharedPreferences.Editor editor;
@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        pref = getApplicationContext().getSharedPreferences("rememberme",0);
+        pref = getApplicationContext().getSharedPreferences("rememberme",Context.MODE_PRIVATE);
         editor = pref.edit();
 
         username = findViewById(R.id.editText);
@@ -85,6 +85,8 @@ private void login(){
             editor.putString("firstname",user.getFirstName()).commit();
             editor.putString("lastname",user.getLastName()).commit();
             editor.putString("password",password.getText().toString()).commit();
+            editor.apply();
+
             startActivity(new Intent(LoginActivity.this,MainActivity.class));
             Toast.makeText(context, "Success!", Toast.LENGTH_SHORT).show();
         }}catch (NullPointerException e){
