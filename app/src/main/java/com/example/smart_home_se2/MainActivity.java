@@ -36,20 +36,8 @@ public class MainActivity extends AppCompatActivity {
 
         User user = LoginActivity.user;
 
-
-        //LIGHT ONE WIDGET
-
-        //textView.setText("Welcome " + user.getFirstName());
-
-
         bottomNavigationView = findViewById(R.id.navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
-
-        //Logic for listeners and onclick actions.
-
-        //initializeDevices();
-        //initializeListeners();
-
 
 
     }
