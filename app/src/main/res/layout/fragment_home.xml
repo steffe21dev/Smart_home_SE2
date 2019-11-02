@@ -44,8 +44,8 @@
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textAlignment="center"
-                android:text="Garage" />
+                android:text="Kitchen Lamp"
+                android:textAlignment="center" />
 
 
         </LinearLayout>
@@ -87,7 +87,8 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
-                android:text="Garage" />
+                android:textAlignment="center"
+                android:text="Fire Alarm" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -128,7 +129,9 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
-                android:text="Garage" />
+                android:gravity="center"
+                android:text="Door alarm"
+                android:textAlignment="center" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -140,6 +143,8 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toTopOf="@+id/cardView"
         app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center"
+        android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

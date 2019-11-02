@@ -38,14 +38,45 @@ public class APIHandler {
     static User user_acc = null;
     static Device device = null;
     RequestQueue queue;
-    ArrayList<Device> devices = new ArrayList<>();
+    ArrayList<Device> devices;
     static User user = null;
 
     ProgressDialog mProgressDialog;
 
 
+    // FIXME: 2019-11-02 Implementera byte av lösenord
+    public void updatePassword(User user1, String newPass, final Context context){
+        String new_url = url + "login/"+user1.getEmail();
+
+        final JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.put("deviceId",String.valueOf(device.getDeviceId()));
+            jsonObject.put("deviceName",device.deviceName);
+            jsonObject.put("deviceStatus",device.getDeviceStatus());
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
 
 
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, new_url, jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Toast.makeText(context, "Success!", Toast.LENGTH_SHORT).show();
+                Log.d("Response",response.toString());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Error!", Toast.LENGTH_SHORT).show();
+                Log.d("Response",error.toString());
+            }
+        });
+
+        RequestSingleton.getInstance(context).addToRequestQueue(jsonObjectRequest);
+
+    }
 
 
 
@@ -89,6 +120,8 @@ public class APIHandler {
         String new_url = url + "devices";
 
         System.out.println(new_url);
+
+        devices = new ArrayList<>();
 
 
         final JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, new_url, null, new Response.Listener<JSONArray>() {

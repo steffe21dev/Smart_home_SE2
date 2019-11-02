@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.smart_home_se2.R;
 import com.example.smart_home_se2.Utility.APIHandler;
@@ -30,7 +29,6 @@ public class HomeFragment extends Fragment {
     Switch lightOne;
     Switch lightTwo;
     Switch lightThree;
-    Switch lightFour;
     TextView textView;
     Context context;
     ArrayList<Device> devices;
@@ -48,10 +46,15 @@ public class HomeFragment extends Fragment {
 
         context = this.getContext();
 
+        devices = APIHandler.getInstance().devices(context);
+
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("rememberme", Context.MODE_PRIVATE);
 
         TextView textView = root.findViewById(R.id.textView);
         lightOne = root.findViewById(R.id.switch1);
+        lightTwo = root.findViewById(R.id.switch2);
+        lightThree = root.findViewById(R.id.switch3);
+
 
         textView.setText("Welcome home " + sharedPreferences.getString("firstname","Error"));
         textView.setGravity(Gravity.CENTER);
@@ -69,31 +72,56 @@ public class HomeFragment extends Fragment {
 
 
     private void initializeDevices(){
-        devices = APIHandler.getInstance().devices(this.getContext());
 
         try {
-            for (int i = 0; i < devices.size(); i++){
-                if(devices.get(i).getDeviceId().equals("1")){
-                    if(devices.get(i).getDeviceStatus().equals("OFF")){
-                        lightOne.setChecked(false);
-                    }
-                    else {
-                        lightOne.setChecked(true);
-                    }
-                }
+            if (devices.get(0).getDeviceStatus().equals("OFF")) {
+                lightOne.setChecked(false);
+            } else {
+                lightOne.setChecked(true);
             }
-        }catch (NullPointerException e){
-            Toast.makeText(this.getContext(), "Nullpointer", Toast.LENGTH_SHORT).show();
+
+
+            if (devices.get(1).getDeviceStatus().equals("OFF")) {
+                lightTwo.setChecked(false);
+            } else {
+                lightTwo.setChecked(true);
+            }
+
+
+            if (devices.get(2).getDeviceStatus().equals("OFF")) {
+                lightThree.setChecked(false);
+            } else {
+                lightThree.setChecked(true);
+            }
+        }catch (IndexOutOfBoundsException e){
             e.printStackTrace();
         }
+
+
     }
 
 
     private void initializeListeners(final Context context){
+
         lightOne.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(lightOne.isChecked()){
+                if(!lightOne.isChecked()){
+                    devices.get(0).setDeviceStatus("OFF");
+                    devices.get(0).toString();
+                    APIHandler.getInstance().changeStateDevice(devices.get(0),context);
+                }
+                else{
+                    devices.get(0).setDeviceStatus("ON");
+                    APIHandler.getInstance().changeStateDevice(devices.get(0),context);
+                }
+            }
+        });
+
+        lightTwo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(!lightTwo.isChecked()){
                     devices.get(1).setDeviceStatus("OFF");
                     devices.get(1).toString();
                     APIHandler.getInstance().changeStateDevice(devices.get(1),context);
@@ -101,6 +129,21 @@ public class HomeFragment extends Fragment {
                 else{
                     devices.get(1).setDeviceStatus("ON");
                     APIHandler.getInstance().changeStateDevice(devices.get(1),context);
+                }
+            }
+        });
+
+        lightThree.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(!lightThree.isChecked()){
+                    devices.get(2).setDeviceStatus("OFF");
+                    devices.get(2).toString();
+                    APIHandler.getInstance().changeStateDevice(devices.get(2),context);
+                }
+                else{
+                    devices.get(2).setDeviceStatus("ON");
+                    APIHandler.getInstance().changeStateDevice(devices.get(2),context);
                 }
             }
         });

@@ -1,35 +1,87 @@
 package com.example.smart_home_se2.ui.notifications;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
-import androidx.annotation.Nullable;
+import com.example.smart_home_se2.R;
+import com.example.smart_home_se2.Utility.User;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.smart_home_se2.R;
-
 public class NotificationsFragment extends Fragment {
 
     private NotificationsViewModel notificationsViewModel;
+
+
+    EditText oldPass,newPass;
+    User user;
+    SharedPreferences preferences;
+    Button button;
+    Context context;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         notificationsViewModel =
                 ViewModelProviders.of(this).get(NotificationsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_notifications, container, false);
-        final TextView textView = root.findViewById(R.id.text_notifications);
         notificationsViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
             }
         });
+
+        context = this.getContext();
+
+        preferences = getActivity().getSharedPreferences("rememberme", Context.MODE_PRIVATE);
+        user = new User(preferences.getString("firstname",null),preferences.getString("lastname",null),
+                preferences.getString("username",null),null);
+
+        oldPass = root.findViewById(R.id.oldPass);
+        newPass = root.findViewById(R.id.newPass);
+        button = root.findViewById(R.id.changePassButton);
+
+
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changePass();
+            }
+        });
+
+
+
+
+
+
+
+
+
         return root;
+
+    }
+
+
+    private void changePass(){
+
+        if(!oldPass.getText().toString().isEmpty() && !newPass.getText().toString().isEmpty()){
+            Toast.makeText(context, "Sucess!", Toast.LENGTH_SHORT).show();
+
+        }
+        else {
+            Toast.makeText(context, "One or more fields are empty", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }
