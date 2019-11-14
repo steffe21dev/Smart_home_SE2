@@ -85,21 +85,21 @@ public class HomeFragment extends Fragment {
     private void initializeDevices(){
 
         try {
-            if (devices.get(0).getDeviceStatus().equals("OFF")) {
+            if (devices.get(0).getDeviceStatus().equals("off")) {
                 lightOne.setChecked(false);
             } else {
                 lightOne.setChecked(true);
             }
 
 
-            if (devices.get(1).getDeviceStatus().equals("OFF")) {
+            if (devices.get(1).getDeviceStatus().equals("off")) {
                 lightTwo.setChecked(false);
             } else {
                 lightTwo.setChecked(true);
             }
 
 
-            if (devices.get(2).getDeviceStatus().equals("OFF")) {
+            if (devices.get(2).getDeviceStatus().equals("off")) {
                 lightThree.setChecked(false);
             } else {
                 lightThree.setChecked(true);
@@ -118,12 +118,12 @@ public class HomeFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(!lightOne.isChecked()){
-                    devices.get(0).setDeviceStatus("OFF");
+                    devices.get(0).setDeviceStatus("off");
                     devices.get(0).toString();
                     APIHandler.getInstance().changeStateDevice(devices.get(0),context);
                 }
                 else{
-                    devices.get(0).setDeviceStatus("ON");
+                    devices.get(0).setDeviceStatus("on");
                     APIHandler.getInstance().changeStateDevice(devices.get(0),context);
                 }
             }
@@ -133,12 +133,12 @@ public class HomeFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(!lightTwo.isChecked()){
-                    devices.get(1).setDeviceStatus("OFF");
+                    devices.get(1).setDeviceStatus("off");
                     devices.get(1).toString();
                     APIHandler.getInstance().changeStateDevice(devices.get(1),context);
                 }
                 else{
-                    devices.get(1).setDeviceStatus("ON");
+                    devices.get(1).setDeviceStatus("on");
                     APIHandler.getInstance().changeStateDevice(devices.get(1),context);
                 }
             }
@@ -148,12 +148,12 @@ public class HomeFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(!lightThree.isChecked()){
-                    devices.get(2).setDeviceStatus("OFF");
+                    devices.get(2).setDeviceStatus("off");
                     devices.get(2).toString();
                     APIHandler.getInstance().changeStateDevice(devices.get(2),context);
                 }
                 else{
-                    devices.get(2).setDeviceStatus("ON");
+                    devices.get(2).setDeviceStatus("on");
                     APIHandler.getInstance().changeStateDevice(devices.get(2),context);
                 }
             }
