@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.smart_home_se2.R;
+import com.example.smart_home_se2.Utility.APIHandler;
 import com.example.smart_home_se2.Utility.User;
 
 import androidx.annotation.NonNull;
@@ -45,7 +46,7 @@ public class NotificationsFragment extends Fragment {
 
         preferences = getActivity().getSharedPreferences("rememberme", Context.MODE_PRIVATE);
         user = new User(preferences.getString("firstname",null),preferences.getString("lastname",null),
-                preferences.getString("username",null),null);
+                preferences.getString("username",null),preferences.getString("password",null));
 
         oldPass = root.findViewById(R.id.oldPass);
         newPass = root.findViewById(R.id.newPass);
@@ -76,8 +77,7 @@ public class NotificationsFragment extends Fragment {
     private void changePass(){
 
         if(!oldPass.getText().toString().isEmpty() && !newPass.getText().toString().isEmpty()){
-            Toast.makeText(context, "Sucess!", Toast.LENGTH_SHORT).show();
-
+            APIHandler.getInstance().updatePassword(user,newPass.getText().toString(),getContext());
         }
         else {
             Toast.makeText(context, "One or more fields are empty", Toast.LENGTH_SHORT).show();
