@@ -1,6 +1,5 @@
 package com.example.smart_home_se2;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,21 +11,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.smart_home_se2.Utility.APIHandler;
-import com.example.smart_home_se2.Utility.RequestSingleton;
 import com.example.smart_home_se2.Utility.User;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,8 +28,6 @@ public class LoginActivity extends AppCompatActivity {
     EditText username;
     EditText password;
     Boolean legit;
-    ProgressDialog mProgressDialog;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,93 +58,46 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                login(username.getText().toString(),password.getText().toString());
+                user = APIHandler.getInstance().login(username.getText().toString(),password.getText().toString(),context);
+
+
+                login();
+
+
+
+
+
+
 
             }
         });
 
-
     }
 
 
+private void login(){
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void login(String email, String pass){
+    try{
+        if(user.getEmail().equals(username.getText().toString())){
 
-
-        mProgressDialog = new ProgressDialog(context);
-
-        mProgressDialog.setIndeterminate(true);
-        mProgressDialog.setMessage("Loading...");
-        mProgressDialog.show();
-
-        String new_url = APIHandler.getInstance().getUrl() + "login/" + email;
-
-
-        final String authString = email + ":" + pass;
-        final String authStringEnc = Base64.getEncoder().encodeToString(authString.getBytes());
-
-        final JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, new_url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    user = new User(response.getString("firstName"),response.getString("lastName"),response.getString("emailAddress"),null);
-                    System.out.println(user.toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                try{
-                    if(user.getEmail().equals(username.getText().toString())){
-
-                        mProgressDialog.dismiss();
-
-                        if(rememberMe.isChecked()) {
-                            editor.putBoolean("rem", true).commit();
-                        }
-
-
-                        editor.putString("username",user.getEmail()).commit();
-                        editor.putString("firstname",user.getFirstName()).commit();
-                        editor.putString("lastname",user.getLastName()).commit();
-                        editor.putString("password",password.getText().toString()).commit();
-                        editor.apply();
-
-                        startActivity(new Intent(LoginActivity.this,MainActivity.class));
-                        Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
-                    }}catch (NullPointerException e){
-                    Toast.makeText(LoginActivity.this, "Failed Login", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-                mProgressDialog.dismiss();
-                System.out.println(error.toString());
-                System.out.println(authStringEnc);
-            }
-        }){
-
-            @Override
-            public Map getHeaders()throws AuthFailureError {
-
-                HashMap headers = new HashMap();
-                headers.put("Content-Type", "application/json");
-                headers.put("Authorization", "Basic " + authStringEnc);
-
-                return headers;
-
+            if(rememberMe.isChecked()) {
+                editor.putBoolean("rem", true).commit();
             }
 
 
-        };
+            editor.putString("username",user.getEmail()).commit();
+            editor.putString("firstname",user.getFirstName()).commit();
+            editor.putString("lastname",user.getLastName()).commit();
+            editor.putString("password",password.getText().toString()).commit();
+            editor.apply();
 
-        RequestSingleton.getInstance(context).addToRequestQueue(objectRequest,"headerRequest");
-
-
+            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+            Toast.makeText(context, "Success!", Toast.LENGTH_SHORT).show();
+        }}catch (NullPointerException e){
+        Toast.makeText(context, "Failed Login", Toast.LENGTH_SHORT).show();
     }
 
+}
 
 }
 

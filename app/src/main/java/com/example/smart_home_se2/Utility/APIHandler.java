@@ -1,5 +1,6 @@
 package com.example.smart_home_se2.Utility;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
@@ -32,7 +33,7 @@ public class APIHandler {
     private static APIHandler apiHandler;
 
     //Enter Host ip adress of server.
-    String hostIP = "192.168.1.232";
+    String hostIP = "10.0.0.2";
     String url = "http://"+hostIP+":8080/SmartHouseApi/";
     static User user_acc = null;
     static Device device = null;
@@ -40,31 +41,19 @@ public class APIHandler {
     ArrayList<Device> devices;
     static User user = null;
 
-
-    public String getUrl() {
-        return url;
-    }
-
-
+    ProgressDialog mProgressDialog;
 
 
     // FIXME: 2019-11-02 Implementera byte av lösenord
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public void updatePassword(User user1, String newPass, final Context context){
         String new_url = url + "login/"+user1.getEmail();
-
-        final String authString = user1.getEmail() + ":" + user1.getPassword();
-
-        final String authStringEnc = Base64.getEncoder().encodeToString(authString.getBytes());
 
         final JSONObject jsonObject = new JSONObject();
 
         try {
-            jsonObject.put("firstName",user1.getFirstName());
-            jsonObject.put("lastName",user1.getLastName());
-            jsonObject.put("email",user1.getEmail());
-            jsonObject.put("password",newPass);
-
+            jsonObject.put("deviceId",String.valueOf(device.getDeviceId()));
+            jsonObject.put("deviceName",device.deviceName);
+            jsonObject.put("deviceStatus",device.getDeviceStatus());
         }
         catch (Exception e){
             e.printStackTrace();
@@ -83,22 +72,7 @@ public class APIHandler {
                 Toast.makeText(context, "Error!", Toast.LENGTH_SHORT).show();
                 Log.d("Response",error.toString());
             }
-        }){
-
-            @Override
-            public Map getHeaders()throws AuthFailureError {
-
-                HashMap headers = new HashMap();
-                headers.put("Content-Type", "application/json");
-                headers.put("Authorization", "Basic " + authStringEnc);
-
-                return headers;
-
-            }
-
-
-        };
-
+        });
 
         RequestSingleton.getInstance(context).addToRequestQueue(jsonObjectRequest);
 
@@ -186,6 +160,66 @@ public class APIHandler {
         return devices;
 
     }
+
+    //
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public User login(String email, String pass, Context context){
+
+
+        mProgressDialog = new ProgressDialog(context);
+
+        mProgressDialog.setIndeterminate(true);
+        mProgressDialog.setMessage("Loading...");
+        mProgressDialog.show();
+
+        String new_url = url + "login/" + email;
+
+
+        final String authString = email + ":" + pass;
+        final String authStringEnc = Base64.getEncoder().encodeToString(authString.getBytes());
+
+        final JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, new_url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    user = new User(response.getString("firstName"),response.getString("lastName"),response.getString("emailAddress"),null);
+                    System.out.println(user.toString());
+                    mProgressDialog.dismiss();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                System.out.println(error.toString());
+                System.out.println(authStringEnc);
+            }
+        }){
+
+            @Override
+            public Map getHeaders()throws AuthFailureError {
+
+                HashMap headers = new HashMap();
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", "Basic " + authStringEnc);
+
+                return headers;
+
+            }
+
+
+        };
+
+        RequestSingleton.getInstance(context).addToRequestQueue(objectRequest,"headerRequest");
+
+        return user;
+
+    }
+
+
+
 
 
 
