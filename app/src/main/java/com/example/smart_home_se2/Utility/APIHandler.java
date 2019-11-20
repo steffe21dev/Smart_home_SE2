@@ -48,6 +48,36 @@ public class APIHandler {
 
 
 
+
+    public void addUser(User usern, Context context){
+        String new_url = url + "users";
+
+        JSONObject object = new JSONObject();
+
+
+        try {
+            object.put("firstName",usern.getFirstName());
+            object.put("lastName",usern.getLastName());
+            object.put("email",usern.getEmail());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, new_url, object, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        RequestSingleton.getInstance(context).addToRequestQueue(request);
+    }
+
     // FIXME: 2019-11-02 Implementera byte av lösenord
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void updatePassword(User user1, String newPass, final Context context){
