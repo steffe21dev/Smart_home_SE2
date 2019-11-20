@@ -200,9 +200,28 @@ public class APIHandler {
     }
 
 
+    public void forgottenPassword(String mail , final Context context){
 
+        String new_url = url + "users/"+mail + "/forgotPassword";
 
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, new_url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
 
+                Toast.makeText(context, "Bra joba", Toast.LENGTH_SHORT).show();
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(context, "inte pra Sine...", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        queue.add(request);
+    }
 
     }
 
