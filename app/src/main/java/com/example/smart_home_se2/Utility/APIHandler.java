@@ -54,11 +54,10 @@ public class APIHandler {
 
         JSONObject object = new JSONObject();
 
-
         try {
             object.put("firstName",usern.getFirstName());
             object.put("lastName",usern.getLastName());
-            object.put("email",usern.getEmail());
+            object.put("emailAddress",usern.getEmail());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -78,6 +77,7 @@ public class APIHandler {
         RequestSingleton.getInstance(context).addToRequestQueue(request);
     }
 
+
     // FIXME: 2019-11-02 Implementera byte av lösenord
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void updatePassword(User user1, String newPass, final Context context){
@@ -92,7 +92,7 @@ public class APIHandler {
         try {
             jsonObject.put("firstName",user1.getFirstName());
             jsonObject.put("lastName",user1.getLastName());
-            jsonObject.put("email",user1.getEmail());
+            jsonObject.put("emailAddress",user1.getEmail());
             jsonObject.put("password",newPass);
 
         }
@@ -137,7 +137,7 @@ public class APIHandler {
 
 
     public void changeStateDevice(Device device, final Context context){
-        String new_url = url + "devices/"+device.getDeviceId();
+        String new_url = url + "houseId/rooms/1/"+device.getDeviceId();
 
         final JSONObject jsonObject = new JSONObject();
 
@@ -172,7 +172,7 @@ public class APIHandler {
     public ArrayList<Device> devices(Context context){
 
         queue = Volley.newRequestQueue(context);
-        String new_url = url + "devices";
+        String new_url = url + "houseId/rooms/1";
 
         System.out.println(new_url);
 

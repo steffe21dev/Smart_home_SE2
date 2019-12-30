@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
         mProgressDialog = new ProgressDialog(context);
 
         mProgressDialog.setIndeterminate(true);
-        mProgressDialog.setMessage("Loading...");
+        mProgressDialog.setMessage("Please wait...");
         mProgressDialog.show();
 
         String new_url = APIHandler.getInstance().getUrl() + "login/" + email;

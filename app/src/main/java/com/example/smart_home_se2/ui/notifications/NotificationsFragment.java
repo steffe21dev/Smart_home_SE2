@@ -2,6 +2,7 @@ package com.example.smart_home_se2.ui.notifications;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.example.smart_home_se2.Utility.User;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -48,6 +50,7 @@ public class NotificationsFragment extends Fragment {
         user = new User(preferences.getString("firstname",null),preferences.getString("lastname",null),
                 preferences.getString("username",null),preferences.getString("password",null));
 
+
         oldPass = root.findViewById(R.id.oldPass);
         newPass = root.findViewById(R.id.newPass);
         button = root.findViewById(R.id.changePassButton);
@@ -55,6 +58,7 @@ public class NotificationsFragment extends Fragment {
 
 
         button.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
                 changePass();
@@ -74,6 +78,7 @@ public class NotificationsFragment extends Fragment {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void changePass(){
 
         if(!oldPass.getText().toString().isEmpty() && !newPass.getText().toString().isEmpty()){
