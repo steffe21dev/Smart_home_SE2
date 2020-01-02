@@ -18,10 +18,7 @@
             android:orientation="vertical">
 
 
-            <?xml version="1.0" encoding="utf-8"?>
-            <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#3C3C44">
@@ -31,6 +28,7 @@
                     android:id="@+id/scrollView2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginBottom="128dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -59,7 +57,7 @@
                         android:layout_height="50dp"
                         android:layout_marginStart="30dp"
                         android:layout_marginLeft="30dp"
-                        android:layout_marginTop="57dp"
+                        android:layout_marginTop="16dp"
                         android:layout_marginEnd="31dp"
                         android:layout_marginRight="31dp"
                         android:layout_marginBottom="292dp"
@@ -76,12 +74,14 @@
                             android:orientation="horizontal">
 
 
-                            <Switch
-                                android:id="@+id/switch3"
-                                android:layout_width="70dp"
-                                android:layout_height="30dp"
-                                android:layout_gravity="center"
-                                android:layout_weight="1"></Switch>
+                            <SeekBar
+                                android:id="@+id/seekBar2"
+                                style="@android:style/Widget.Material.SeekBar.Discrete"
+                                android:layout_width="55dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:max="255"
+                                android:progress="1" />
 
                             <TextView
                                 android:id="@+id/text_home"
@@ -91,7 +91,7 @@
                                 android:layout_marginLeft="20dp"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:text="Door alarm"
+                                android:text="Fan"
                                 android:textAlignment="center" />
                         </LinearLayout>
 
@@ -105,7 +105,7 @@
                         android:layout_height="50dp"
                         android:layout_marginStart="30dp"
                         android:layout_marginLeft="30dp"
-                        android:layout_marginTop="71dp"
+                        android:layout_marginTop="48dp"
                         android:layout_marginEnd="31dp"
                         android:layout_marginRight="31dp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -135,7 +135,7 @@
                                 android:layout_marginLeft="20dp"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:text="Kitchen Lamp"
+                                android:text="Indoor Lamp"
                                 android:textAlignment="center" />
 
 
@@ -150,10 +150,11 @@
                         android:layout_height="50dp"
                         android:layout_marginStart="30dp"
                         android:layout_marginLeft="30dp"
-                        android:layout_marginTop="64dp"
+                        android:layout_marginTop="16dp"
                         android:layout_marginEnd="31dp"
                         android:layout_marginRight="31dp"
-                        android:layout_marginBottom="57dp"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintBottom_toTopOf="@+id/cardView2"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/cardView">
@@ -179,7 +180,7 @@
                                 android:layout_gravity="center"
                                 android:layout_marginLeft="20dp"
                                 android:layout_weight="1"
-                                android:text="Fire Alarm"
+                                android:text="Outdoor Lamp"
                                 android:textAlignment="center" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -191,10 +192,10 @@
                         android:layout_height="50dp"
                         android:layout_marginStart="30dp"
                         android:layout_marginLeft="30dp"
-                        android:layout_marginTop="64dp"
+                        android:layout_marginTop="16dp"
                         android:layout_marginEnd="31dp"
                         android:layout_marginRight="31dp"
-                        android:layout_marginBottom="57dp"
+                        android:layout_marginBottom="16dp"
                         app:layout_constraintBottom_toTopOf="@+id/cardView3"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -221,7 +222,7 @@
                                 android:layout_gravity="center"
                                 android:layout_marginLeft="20dp"
                                 android:layout_weight="1"
-                                android:text="Fire Alarm"
+                                android:text="Radiator"
                                 android:textAlignment="center" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -303,7 +304,7 @@
                                 android:layout_gravity="center"
                                 android:layout_marginLeft="20dp"
                                 android:layout_weight="1"
-                                android:text="Fire Alarm"
+                                android:text="Timer lamp 1"
                                 android:textAlignment="center" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -314,10 +315,10 @@
                         android:layout_height="50dp"
                         android:layout_marginStart="30dp"
                         android:layout_marginLeft="30dp"
-                        android:layout_marginTop="64dp"
                         android:layout_marginEnd="31dp"
                         android:layout_marginRight="31dp"
-                        android:layout_marginBottom="57dp"
+                        android:layout_marginBottom="64dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/cardView4">
@@ -343,7 +344,7 @@
                                 android:layout_gravity="center"
                                 android:layout_marginLeft="20dp"
                                 android:layout_weight="1"
-                                android:text="Fire Alarm"
+                                android:text="Timer lamp 2"
                                 android:textAlignment="center" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>

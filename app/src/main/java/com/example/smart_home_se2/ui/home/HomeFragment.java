@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -25,9 +26,16 @@ import androidx.lifecycle.ViewModelProviders;
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
-    Switch lightOne;
-    Switch lightTwo;
-    Switch lightThree;
+    Switch deviceOne;
+    Switch deviceTwo;
+    Switch deviceThree;
+    Switch deviceFour;
+    Switch deviceFive;
+    Switch deviceSix;
+
+    SeekBar seekBar;
+
+
     TextView textView;
     Context context;
     ArrayList<Device> devices;
@@ -48,10 +56,18 @@ public class HomeFragment extends Fragment {
 
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("rememberme", Context.MODE_PRIVATE);
 
+
+        ///Initialize the id of device switches
         TextView textView = root.findViewById(R.id.textView);
-        lightOne = root.findViewById(R.id.switch1);
-        lightTwo = root.findViewById(R.id.switch2);
-        lightThree = root.findViewById(R.id.switch3);
+        deviceOne = root.findViewById(R.id.switch1);
+        deviceTwo = root.findViewById(R.id.switch2);
+        deviceThree = root.findViewById(R.id.switch4);
+        seekBar = root.findViewById(R.id.seekBar2);
+        deviceFive = root.findViewById(R.id.switch6);
+        deviceSix = root.findViewById(R.id.switch7);
+
+
+
 
 
         textView.setText("Welcome home " + sharedPreferences.getString("firstname","Error"));
@@ -86,24 +102,42 @@ public class HomeFragment extends Fragment {
 
         try {
             if (devices.get(0).getDeviceStatus().equals("0")) {
-                lightOne.setChecked(false);
+                deviceOne.setChecked(false);
             } else {
-                lightOne.setChecked(true);
+                deviceOne.setChecked(true);
             }
 
 
             if (devices.get(1).getDeviceStatus().equals("0")) {
-                lightTwo.setChecked(false);
+                deviceTwo.setChecked(false);
             } else {
-                lightTwo.setChecked(true);
+                deviceTwo.setChecked(true);
             }
 
 
-            if (devices.get(2).getDeviceStatus().equals("0")) {
-                lightThree.setChecked(false);
+            if (devices.get(4).getDeviceStatus().equals("0")) {
+                deviceThree.setChecked(false);
             } else {
-                lightThree.setChecked(true);
+                deviceThree.setChecked(true);
             }
+
+
+            seekBar.setProgress(Integer.parseInt(devices.get(8).getDeviceStatus()));
+
+
+            if (devices.get(12).getDeviceStatus().equals("0")) {
+                deviceFive.setChecked(false);
+            } else {
+                deviceFive.setChecked(true);
+            }
+
+            if (devices.get(13).getDeviceStatus().equals("0")) {
+                deviceSix.setChecked(false);
+            } else {
+                deviceSix.setChecked(true);
+            }
+
+
         }catch (IndexOutOfBoundsException e){
             e.printStackTrace();
         }
@@ -114,47 +148,99 @@ public class HomeFragment extends Fragment {
 
     private void initializeListeners(final Context context){
 
-        lightOne.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        deviceOne.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(!lightOne.isChecked()){
+                if(!deviceOne.isChecked()){
                     devices.get(0).setDeviceStatus("0");
                     devices.get(0).toString();
                     APIHandler.getInstance().changeStateDevice(devices.get(0),context);
                 }
                 else{
-                    devices.get(0).setDeviceStatus("255");
+                    devices.get(0).setDeviceStatus("1");
                     APIHandler.getInstance().changeStateDevice(devices.get(0),context);
                 }
             }
         });
 
-        lightTwo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        deviceTwo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(!lightTwo.isChecked()){
+                if(!deviceTwo.isChecked()){
                     devices.get(1).setDeviceStatus("0");
                     devices.get(1).toString();
                     APIHandler.getInstance().changeStateDevice(devices.get(1),context);
                 }
                 else{
-                    devices.get(1).setDeviceStatus("255");
+                    devices.get(1).setDeviceStatus("1");
                     APIHandler.getInstance().changeStateDevice(devices.get(1),context);
                 }
             }
         });
 
-        lightThree.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        deviceThree.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(!lightThree.isChecked()){
-                    devices.get(2).setDeviceStatus("0");
-                    devices.get(2).toString();
-                    APIHandler.getInstance().changeStateDevice(devices.get(2),context);
+                if(!deviceThree.isChecked()){
+                    devices.get(4).setDeviceStatus("0");
+                    devices.get(4).toString();
+                    APIHandler.getInstance().changeStateDevice(devices.get(4),context);
                 }
                 else{
-                    devices.get(2).setDeviceStatus("255");
-                    APIHandler.getInstance().changeStateDevice(devices.get(2),context);
+                    devices.get(4).setDeviceStatus("1");
+                    APIHandler.getInstance().changeStateDevice(devices.get(4),context);
+                }
+            }
+        });
+
+
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                devices.get(8).setDeviceStatus(String.valueOf(seekBar.getProgress()));
+
+                APIHandler.getInstance().changeStateDevice(devices.get(8),context);
+            }
+        });
+
+
+        deviceFive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(!deviceFive.isChecked()){
+                    devices.get(12).setDeviceStatus("0");
+                    devices.get(12).toString();
+                    APIHandler.getInstance().changeStateDevice(devices.get(12),context);
+                }
+                else{
+                    devices.get(12).setDeviceStatus("1");
+                    APIHandler.getInstance().changeStateDevice(devices.get(12),context);
+                }
+            }
+        });
+
+        deviceSix.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(!deviceSix.isChecked()){
+                    devices.get(13).setDeviceStatus("0");
+                    devices.get(13).toString();
+                    APIHandler.getInstance().changeStateDevice(devices.get(13),context);
+                }
+                else{
+                    devices.get(13).setDeviceStatus("1");
+                    APIHandler.getInstance().changeStateDevice(devices.get(13),context);
                 }
             }
         });
