@@ -65,13 +65,6 @@
                         android:orientation="horizontal">
 
 
-                        <Switch
-                            android:id="@+id/switch3"
-                            android:layout_width="70dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"></Switch>
-
                         <TextView
                             android:id="@+id/text_home"
                             android:layout_width="50dp"
@@ -80,7 +73,7 @@
                             android:layout_marginLeft="20dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="Water Leakage"
+                            android:text="Water Leakage : Value"
                             android:textAlignment="center" />
                     </LinearLayout>
 
@@ -110,21 +103,15 @@
                         android:orientation="horizontal">
 
 
-                        <Switch
-                            android:id="@+id/switch1"
-                            android:layout_width="70dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="1" />
-
                         <TextView
+                            android:id="@+id/d1"
                             android:layout_width="50dp"
                             android:layout_height="20dp"
                             android:layout_gravity="center"
                             android:layout_marginLeft="20dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="Indoor Lamp"
+                            android:text="Indoor Lamp : Value"
                             android:textAlignment="center" />
 
 
@@ -154,20 +141,14 @@
                         android:orientation="horizontal">
 
 
-                        <Switch
-                            android:id="@+id/switch2"
-                            android:layout_width="70dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"></Switch>
-
                         <TextView
+                            android:id="@+id/d2"
                             android:layout_width="50dp"
                             android:layout_height="20dp"
                             android:layout_gravity="center"
                             android:layout_marginLeft="20dp"
                             android:layout_weight="1"
-                            android:text="Outdoor Lamp"
+                            android:text="Outdoor Lamp : Value"
                             android:textAlignment="center" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -194,20 +175,14 @@
                         android:orientation="horizontal">
 
 
-                        <Switch
-                            android:id="@+id/switch4"
-                            android:layout_width="70dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"></Switch>
-
                         <TextView
+                            android:id="@+id/d3"
                             android:layout_width="50dp"
                             android:layout_height="20dp"
                             android:layout_gravity="center"
                             android:layout_marginLeft="20dp"
                             android:layout_weight="1"
-                            android:text="Indoor Temp"
+                            android:text="Indoor Temp : Value"
                             android:textAlignment="center" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -274,20 +249,14 @@
                         android:orientation="horizontal">
 
 
-                        <Switch
-                            android:id="@+id/switch6"
-                            android:layout_width="70dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"></Switch>
-
                         <TextView
+                            android:id="@+id/d5"
                             android:layout_width="50dp"
                             android:layout_height="20dp"
                             android:layout_gravity="center"
                             android:layout_marginLeft="20dp"
                             android:layout_weight="1"
-                            android:text="Radiator"
+                            android:text="Radiator : Value"
                             android:textAlignment="center" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -313,20 +282,14 @@
                         android:orientation="horizontal">
 
 
-                        <Switch
-                            android:id="@+id/switch7"
-                            android:layout_width="70dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"></Switch>
-
                         <TextView
+                            android:id="@+id/d6"
                             android:layout_width="50dp"
                             android:layout_height="20dp"
                             android:layout_gravity="center"
                             android:layout_marginLeft="20dp"
                             android:layout_weight="1"
-                            android:text="Power Cut"
+                            android:text="Power Cut : Value"
                             android:textAlignment="center" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -352,20 +315,14 @@
                         android:orientation="horizontal">
 
 
-                        <Switch
-                            android:id="@+id/switch8"
-                            android:layout_width="70dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"></Switch>
-
                         <TextView
+                            android:id="@+id/d7"
                             android:layout_width="50dp"
                             android:layout_height="20dp"
                             android:layout_gravity="center"
                             android:layout_marginLeft="20dp"
                             android:layout_weight="1"
-                            android:text="Fire Alarm"
+                            android:text="Fire Alarm : Value"
                             android:textAlignment="center" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -391,20 +348,14 @@
                         android:orientation="horizontal">
 
 
-                        <Switch
-                            android:id="@+id/switch9"
-                            android:layout_width="70dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"></Switch>
-
                         <TextView
+                            android:id="@+id/d8"
                             android:layout_width="50dp"
                             android:layout_height="20dp"
                             android:layout_gravity="center"
                             android:layout_marginLeft="20dp"
                             android:layout_weight="1"
-                            android:text="Door Alarm"
+                            android:text="Door Alarm : Value"
                             android:textAlignment="center" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -432,20 +383,14 @@
                         android:orientation="horizontal">
 
 
-                        <Switch
-                            android:id="@+id/switch10"
-                            android:layout_width="70dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"></Switch>
-
                         <TextView
+                            android:id="@+id/d9"
                             android:layout_width="50dp"
                             android:layout_height="20dp"
                             android:layout_gravity="center"
                             android:layout_marginLeft="20dp"
                             android:layout_weight="1"
-                            android:text="Fan"
+                            android:text="Fan : Value"
                             android:textAlignment="center" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -471,20 +416,14 @@
                         android:orientation="horizontal">
 
 
-                        <Switch
-                            android:id="@+id/switch12"
-                            android:layout_width="70dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"></Switch>
-
                         <TextView
+                            android:id="@+id/d11"
                             android:layout_width="50dp"
                             android:layout_height="20dp"
                             android:layout_gravity="center"
                             android:layout_marginLeft="20dp"
                             android:layout_weight="1"
-                            android:text="Stove Alarm"
+                            android:text="Stove Alarm : Value"
                             android:textAlignment="center" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -510,20 +449,14 @@
                         android:orientation="horizontal">
 
 
-                        <Switch
-                            android:id="@+id/switch11"
-                            android:layout_width="70dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"></Switch>
-
                         <TextView
+                            android:id="@+id/d12"
                             android:layout_width="50dp"
                             android:layout_height="20dp"
                             android:layout_gravity="center"
                             android:layout_marginLeft="20dp"
                             android:layout_weight="1"
-                            android:text="Window Alarm"
+                            android:text="Window Alarm : Value"
                             android:textAlignment="center" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -549,20 +482,14 @@
                         android:orientation="horizontal">
 
 
-                        <Switch
-                            android:id="@+id/switch13"
-                            android:layout_width="70dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"></Switch>
-
                         <TextView
+                            android:id="@+id/d13"
                             android:layout_width="50dp"
                             android:layout_height="20dp"
                             android:layout_gravity="center"
                             android:layout_marginLeft="20dp"
                             android:layout_weight="1"
-                            android:text="Timer Lamp 1"
+                            android:text="Timer Lamp 1 : Value"
                             android:textAlignment="center" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -588,20 +515,14 @@
                         android:orientation="horizontal">
 
 
-                        <Switch
-                            android:id="@+id/switch14"
-                            android:layout_width="70dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"></Switch>
-
                         <TextView
+                            android:id="@+id/d14"
                             android:layout_width="50dp"
                             android:layout_height="20dp"
                             android:layout_gravity="center"
                             android:layout_marginLeft="20dp"
                             android:layout_weight="1"
-                            android:text="Timer Lamp 2"
+                            android:text="Timer Lamp 2 : Value"
                             android:textAlignment="center" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -627,20 +548,14 @@
                         android:orientation="horizontal">
 
 
-                        <Switch
-                            android:id="@+id/switch15"
-                            android:layout_width="70dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"></Switch>
-
                         <TextView
+                            android:id="@+id/d15"
                             android:layout_width="50dp"
                             android:layout_height="20dp"
                             android:layout_gravity="center"
                             android:layout_marginLeft="20dp"
                             android:layout_weight="1"
-                            android:text="Light Sensor"
+                            android:text="Light Sensor : Value"
                             android:textAlignment="center" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -668,20 +583,14 @@
                         android:orientation="horizontal">
 
 
-                        <Switch
-                            android:id="@+id/switch16"
-                            android:layout_width="70dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"></Switch>
-
                         <TextView
+                            android:id="@+id/d4"
                             android:layout_width="50dp"
                             android:layout_height="20dp"
                             android:layout_gravity="center"
                             android:layout_marginLeft="20dp"
                             android:layout_weight="1"
-                            android:text="Fire Alarm"
+                            android:text="Outdoor Temp : Value"
                             android:textAlignment="center" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>

@@ -43,4 +43,20 @@ public class Device {
                 '}';
     }
 
+
+    public String prettyPrint(){
+
+        if(deviceStatus.equals("1"))
+            return deviceName + " : " + "ON";
+        else if(deviceStatus.equals("0"))
+            return deviceName + " : " + "OFF";
+        else if(deviceName.contains("temp"))
+            return deviceName + " : " + deviceStatus +"°";
+
+
+
+
+        return deviceName + " : " + deviceStatus;
+    }
+
 }
