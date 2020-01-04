@@ -3,5 +3,5 @@
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_home">My Home</string>
     <string name="title_dashboard">Add Guest</string>
-    <string name="title_notifications">Password</string>
+    <string name="title_notifications">Devices</string>
 </resources>
