@@ -35,31 +35,26 @@ public class ShareFragment extends Fragment {
         shareViewModel =
                 ViewModelProviders.of(this).get(ShareViewModel.class);
         final View root = inflater.inflate(R.layout.fragment_share, container, false);
-        final TextView textView = root.findViewById(R.id.text_share);
-        shareViewModel.getText().observe(this, new Observer<String>() {
+
+        context = getActivity().getApplicationContext();
+
+        preferences = getActivity().getSharedPreferences("rememberme", Context.MODE_PRIVATE);
+        user = new User(preferences.getString("firstname", null), preferences.getString("lastname", null),
+                preferences.getString("username", null), null);
+
+        oldPass = root.findViewById(R.id.oldPass);
+        newPass = root.findViewById(R.id.newPass);
+        button = root.findViewById(R.id.changePassButton);
+
+
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-
-                context = getActivity().getApplicationContext();
-
-                preferences = getActivity().getSharedPreferences("rememberme", Context.MODE_PRIVATE);
-                user = new User(preferences.getString("firstname", null), preferences.getString("lastname", null),
-                        preferences.getString("username", null), null);
-
-                oldPass = root.findViewById(R.id.oldPass);
-                newPass = root.findViewById(R.id.newPass);
-                button = root.findViewById(R.id.changePassButton);
-
-
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        changePass();
-                    }
-                });
+            public void onClick(View view) {
+                changePass();
             }
         });
+
+
         return root;
     }
 
