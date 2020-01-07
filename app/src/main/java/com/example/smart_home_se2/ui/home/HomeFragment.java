@@ -83,20 +83,29 @@ public class HomeFragment extends Fragment {
                 Device device = (Device)listView.getItemAtPosition(position);
 
 
-                switch (device.getDeviceStatus()){
-                    case "1":
-                        device.setDeviceStatus("0");
-                        break;
-                    case "0":
-                        device.setDeviceStatus("1");
-                        break;
 
-                     default:
-                         Toast.makeText(context, "You can't do this", Toast.LENGTH_SHORT).show();
+                if(!device.getDeviceName().contains("temp") && !device.getDeviceName().contains("fan")) {
+                    switch (device.getDeviceStatus()) {
+                        case "1":
+                            device.setDeviceStatus("0");
+                            break;
+                        case "0":
+                            device.setDeviceStatus("1");
+                            break;
+
+                        default:
+                            Toast.makeText(context, "You can't do this", Toast.LENGTH_SHORT).show();
+                    }
+                    APIHandler.getInstance().changeStateDevice(device, context);
+
+                    getDevices(context);
                 }
-                APIHandler.getInstance().changeStateDevice(device,context);
-
-                getDevices(context);
+                else if(device.getDeviceName().contains("temp")) {
+                    Toast.makeText(context, "The temp inside is " + device.getDeviceStatus() +"°", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(context, "Control the fan with the slider below", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
