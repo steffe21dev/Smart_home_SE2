@@ -12,7 +12,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Main room</string>
+    <string name="menu_home">Inside</string>
     <string name="menu_gallery">Outside</string>
     <string name="menu_slideshow">Security</string>
     <string name="menu_tools">Add guest user</string>

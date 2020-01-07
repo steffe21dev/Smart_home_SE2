@@ -37,6 +37,9 @@ public class Device {
     @Override
     public String toString() {
         String text = "";
+        String name = getDeviceName().substring(0,1).toUpperCase() + getDeviceName().substring(1);
+
+
         if(deviceStatus.equals("1"))
             text = "ON";
         else if(deviceStatus.equals("0"))
@@ -46,7 +49,7 @@ public class Device {
         else if(deviceName.contains("fan"))
             text = deviceStatus + "";
 
-        return deviceName + "  :  " + text;
+        return name + "  :  " + text;
     }
 
 
