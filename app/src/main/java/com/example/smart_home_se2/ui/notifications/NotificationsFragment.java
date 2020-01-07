@@ -55,7 +55,7 @@ public class NotificationsFragment extends Fragment {
             }
         });
 
-        hostIP = "192.168.1.232";
+        hostIP = "192.168.43.33";
         url = "http://"+hostIP+":8080/SmartHouseApi/";
 
         initID(root);
@@ -103,6 +103,7 @@ public class NotificationsFragment extends Fragment {
 
 
 
+
     }
 
 
@@ -128,7 +129,7 @@ public class NotificationsFragment extends Fragment {
 
     public void initCall(Context context){
 
-        String new_url = url + "houseId/rooms/1";
+        String new_url = url + "rooms/1";
 
         System.out.println(new_url);
 
