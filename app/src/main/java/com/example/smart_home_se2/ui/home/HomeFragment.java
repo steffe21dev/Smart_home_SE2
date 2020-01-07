@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -48,6 +49,7 @@ public class HomeFragment extends Fragment {
 
     Context context;
     ArrayList<Device> devices;
+    ArrayAdapter<Device> arrayAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -60,6 +62,8 @@ public class HomeFragment extends Fragment {
             public void onChanged(@Nullable String s) {
             }
         });
+
+
 
 
         listView = root.findViewById(R.id.listview1);
@@ -78,12 +82,21 @@ public class HomeFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Device device = (Device)listView.getItemAtPosition(position);
 
-                if(device.getDeviceStatus().equals("0"))
-                    device.setDeviceStatus("1");
-                else
-                    device.setDeviceStatus("0");
 
+                switch (device.getDeviceStatus()){
+                    case "1":
+                        device.setDeviceStatus("0");
+                        break;
+                    case "0":
+                        device.setDeviceStatus("1");
+                        break;
+
+                     default:
+                         Toast.makeText(context, "You can't do this", Toast.LENGTH_SHORT).show();
+                }
                 APIHandler.getInstance().changeStateDevice(device,context);
+
+                getDevices(context);
             }
         });
 
@@ -127,13 +140,7 @@ public class HomeFragment extends Fragment {
                     }
 
 
-                    ArrayAdapter<Device> arrayAdapter = new ArrayAdapter<>(context,android.R.layout.simple_expandable_list_item_1
-
-                            ,devices);
-
-
-
-                    listView.setAdapter(arrayAdapter);
+                    initList();
 
 
                 }
@@ -149,5 +156,18 @@ public class HomeFragment extends Fragment {
         RequestSingleton.getInstance(context).addToRequestQueue(jsonArrayRequest);
 
 
+    }
+
+
+    public void initList(){
+
+
+        arrayAdapter = new ArrayAdapter<>(context,android.R.layout.simple_expandable_list_item_1
+
+                ,devices);
+
+
+
+        listView.setAdapter(arrayAdapter);
     }
 }
