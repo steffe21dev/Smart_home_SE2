@@ -2,6 +2,7 @@ package com.example.smart_home_se2.ui.share;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.smart_home_se2.R;
+import com.example.smart_home_se2.Utility.APIHandler;
 import com.example.smart_home_se2.Utility.User;
 
 public class ShareFragment extends Fragment {
@@ -61,7 +63,9 @@ public class ShareFragment extends Fragment {
     private void changePass() {
 
         if (!oldPass.getText().toString().isEmpty() && !newPass.getText().toString().isEmpty()) {
-            Toast.makeText(context, "Sucess!", Toast.LENGTH_SHORT).show();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                APIHandler.getInstance().updatePassword(user,newPass.getText().toString(),context);
+            }
 
         } else {
             Toast.makeText(context, "One or more fields are empty", Toast.LENGTH_SHORT).show();

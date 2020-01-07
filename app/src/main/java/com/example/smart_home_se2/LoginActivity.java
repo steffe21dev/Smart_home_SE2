@@ -110,7 +110,6 @@ public class LoginActivity extends AppCompatActivity {
         mProgressDialog.show();
 
         String new_url = APIHandler.getInstance().getUrl() + "login/" + email;
-        System.out.println(new_url);
 
 
         final String authString = email + ":" + pass;
@@ -121,7 +120,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 try {
                     user = new User(response.getString("firstName"),response.getString("lastName"),response.getString("emailAddress"),null);
-                    System.out.println(user.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
