@@ -8,7 +8,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.example.smart_home_se2.Utility.User;
 import com.example.smart_home_se2.ui.dashboard.DashboardFragment;
-import com.example.smart_home_se2.ui.home.HomeFragment;
+import com.example.smart_home_se2.ui.home.HomeFragment_1;
 import com.example.smart_home_se2.ui.notifications.NotificationsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
                         case R.id.navigation_home:
 
-                            fragment = new HomeFragment();
+                            fragment = new HomeFragment_1();
 
                             break;
 

@@ -11,7 +11,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ForgotPassword"></activity>
+        <activity
+            android:name=".ShowRoomActivity"
+            android:label="@string/title_activity_show_room"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ForgotPassword" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -8,35 +8,44 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.smart_home_se2.R;
 import com.example.smart_home_se2.Utility.APIHandler;
 import com.example.smart_home_se2.Utility.Device;
+import com.example.smart_home_se2.Utility.RequestSingleton;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
-    Switch deviceOne;
-    Switch deviceTwo;
-    Switch deviceThree;
-    Switch deviceFour;
-    Switch deviceFive;
-    Switch deviceSix;
 
-    SeekBar seekBar;
+    ListView listView;
 
 
-    TextView textView;
     Context context;
     ArrayList<Device> devices;
 
@@ -45,204 +54,100 @@ public class HomeFragment extends Fragment {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+        final TextView textView = root.findViewById(R.id.text_home);
+        homeViewModel.getText().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+            }
+        });
 
 
-
-
+        listView = root.findViewById(R.id.listview1);
 
         context = this.getContext();
 
-        devices = APIHandler.getInstance().devices(context);
-
-        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("rememberme", Context.MODE_PRIVATE);
-
-
-        ///Initialize the id of device switches
-        TextView textView = root.findViewById(R.id.textView);
-        deviceOne = root.findViewById(R.id.switch1);
-        deviceTwo = root.findViewById(R.id.switch2);
-        deviceThree = root.findViewById(R.id.switch4);
-        seekBar = root.findViewById(R.id.seekBar2);
-        deviceFive = root.findViewById(R.id.switch6);
-        deviceSix = root.findViewById(R.id.switch7);
+        getDevices(context);
 
 
 
+        //SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("rememberme", Context.MODE_PRIVATE);
 
 
-        textView.setText("Welcome home " + sharedPreferences.getString("firstname","Error"));
-        textView.setGravity(Gravity.CENTER);
-
-
-        final Handler handler = new Handler();
-
-        final Runnable runnable = new Runnable() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void run() {
-                handler.postDelayed(this,500);
-                initializeDevices();
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Device device = (Device)listView.getItemAtPosition(position);
+
+                if(device.getDeviceStatus().equals("0"))
+                    device.setDeviceStatus("1");
+                else
+                    device.setDeviceStatus("0");
+
+                APIHandler.getInstance().changeStateDevice(device,context);
             }
-        };
-        runnable.run();
-
-
-        initializeListeners(context);
-
+        });
 
 
 
 
         return root;
-
-
     }
 
 
-    private void initializeDevices(){
+    public void getDevices(final Context context){
 
-        try {
-            if (devices.get(0).getDeviceStatus().equals("0")) {
-                deviceOne.setChecked(false);
-            } else {
-                deviceOne.setChecked(true);
-            }
+        String new_url = APIHandler.getInstance().getUrl() + "rooms/1";
 
+        System.out.println(new_url);
 
-            if (devices.get(1).getDeviceStatus().equals("0")) {
-                deviceTwo.setChecked(false);
-            } else {
-                deviceTwo.setChecked(true);
-            }
+        devices = new ArrayList<>();
 
 
-            if (devices.get(4).getDeviceStatus().equals("0")) {
-                deviceThree.setChecked(false);
-            } else {
-                deviceThree.setChecked(true);
-            }
-
-
-            seekBar.setProgress(Integer.parseInt(devices.get(8).getDeviceStatus()));
-
-
-            if (devices.get(12).getDeviceStatus().equals("0")) {
-                deviceFive.setChecked(false);
-            } else {
-                deviceFive.setChecked(true);
-            }
-
-            if (devices.get(13).getDeviceStatus().equals("0")) {
-                deviceSix.setChecked(false);
-            } else {
-                deviceSix.setChecked(true);
-            }
-
-
-        }catch (IndexOutOfBoundsException e){
-            e.printStackTrace();
-        }
-
-
-    }
-
-
-    private void initializeListeners(final Context context){
-
-        deviceOne.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        final JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, new_url, null, new Response.Listener<JSONArray>() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(!deviceOne.isChecked()){
-                    devices.get(0).setDeviceStatus("0");
-                    devices.get(0).toString();
-                    APIHandler.getInstance().changeStateDevice(devices.get(0),context);
+            public void onResponse(JSONArray response) {
+
+                for(int i = 0; i < response.length(); i++){
+                    try {
+                        JSONObject jsonObject = response.getJSONObject(i);
+
+
+                        String deviceId = jsonObject.getString("deviceId");
+                        String deviceName = jsonObject.getString("deviceName");
+                        String deviceStatus = jsonObject.getString("deviceStatus");
+
+                        System.out.println(deviceId);
+                        System.out.println(deviceName);
+                        System.out.println(deviceStatus);
+
+                        devices.add(new Device(deviceName,deviceStatus,deviceId));
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    ArrayAdapter<Device> arrayAdapter = new ArrayAdapter<>(context,android.R.layout.simple_expandable_list_item_1
+
+                            ,devices);
+
+
+
+                    listView.setAdapter(arrayAdapter);
+
+
                 }
-                else{
-                    devices.get(0).setDeviceStatus("1");
-                    APIHandler.getInstance().changeStateDevice(devices.get(0),context);
-                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
             }
         });
 
-        deviceTwo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(!deviceTwo.isChecked()){
-                    devices.get(1).setDeviceStatus("0");
-                    devices.get(1).toString();
-                    APIHandler.getInstance().changeStateDevice(devices.get(1),context);
-                }
-                else{
-                    devices.get(1).setDeviceStatus("1");
-                    APIHandler.getInstance().changeStateDevice(devices.get(1),context);
-                }
-            }
-        });
-
-        deviceThree.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(!deviceThree.isChecked()){
-                    devices.get(4).setDeviceStatus("0");
-                    devices.get(4).toString();
-                    APIHandler.getInstance().changeStateDevice(devices.get(4),context);
-                }
-                else{
-                    devices.get(4).setDeviceStatus("1");
-                    APIHandler.getInstance().changeStateDevice(devices.get(4),context);
-                }
-            }
-        });
+        RequestSingleton.getInstance(context).addToRequestQueue(jsonArrayRequest);
 
 
-
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                devices.get(8).setDeviceStatus(String.valueOf(seekBar.getProgress()));
-
-                APIHandler.getInstance().changeStateDevice(devices.get(8),context);
-            }
-        });
-
-
-        deviceFive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(!deviceFive.isChecked()){
-                    devices.get(12).setDeviceStatus("0");
-                    devices.get(12).toString();
-                    APIHandler.getInstance().changeStateDevice(devices.get(12),context);
-                }
-                else{
-                    devices.get(12).setDeviceStatus("1");
-                    APIHandler.getInstance().changeStateDevice(devices.get(12),context);
-                }
-            }
-        });
-
-        deviceSix.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(!deviceSix.isChecked()){
-                    devices.get(13).setDeviceStatus("0");
-                    devices.get(13).toString();
-                    APIHandler.getInstance().changeStateDevice(devices.get(13),context);
-                }
-                else{
-                    devices.get(13).setDeviceStatus("1");
-                    APIHandler.getInstance().changeStateDevice(devices.get(13),context);
-                }
-            }
-        });
     }
 }

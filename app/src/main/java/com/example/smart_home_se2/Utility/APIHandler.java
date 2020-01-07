@@ -32,8 +32,8 @@ public class APIHandler {
     private static APIHandler apiHandler;
 
     //Enter Host ip adress of server.
-    String hostIP = "192.168.1.232";
-    String url = "http://"+hostIP+":8080/SmartHouseApi/";
+    static String hostIP = "192.168.1.232";
+    static String url = "http://"+hostIP+":8080/SmartHouseApi/";
     static User user_acc = null;
     static Device device = null;
     RequestQueue queue;
@@ -137,7 +137,7 @@ public class APIHandler {
 
 
     public void changeStateDevice(Device device, final Context context){
-        String new_url = url + "houseId/rooms/1/"+device.getDeviceId();
+        String new_url = url + "rooms/1/"+device.getDeviceId();
 
         final JSONObject jsonObject = new JSONObject();
 

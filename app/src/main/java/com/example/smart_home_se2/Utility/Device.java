@@ -36,11 +36,17 @@ public class Device {
 
     @Override
     public String toString() {
-        return "Device{" +
-                "deviceName='" + deviceName + '\'' +
-                ", deviceStatus='" + deviceStatus + '\'' +
-                ", deviceId='" + deviceId + '\'' +
-                '}';
+        String text = "";
+        if(deviceStatus.equals("1"))
+            text = "ON";
+        else if(deviceStatus.equals("0"))
+            text = "OFF";
+        else if(deviceName.contains("temp"))
+            text = deviceStatus +"°";
+        else if(deviceName.contains("fan"))
+            text = deviceStatus + "";
+
+        return deviceName + "  :  " + text;
     }
 
 

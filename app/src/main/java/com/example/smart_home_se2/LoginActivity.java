@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         if(pref.getBoolean("rem",false) == true){
-            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+            startActivity(new Intent(LoginActivity.this,ShowRoomActivity.class));
         }
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -141,7 +141,7 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString("password",password.getText().toString()).commit();
                         editor.apply();
 
-                        startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                        startActivity(new Intent(LoginActivity.this,ShowRoomActivity.class));
                         Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
                     }}catch (NullPointerException e){
                     Toast.makeText(LoginActivity.this, "Failed Login", Toast.LENGTH_SHORT).show();
