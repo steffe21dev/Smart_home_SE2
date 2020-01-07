@@ -126,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 try{
-                    if(user.getEmail().equals(username.getText().toString())){
+                    if(user.getEmailAddress().equals(username.getText().toString())){
 
                         mProgressDialog.dismiss();
 
@@ -135,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
 
 
-                        editor.putString("username",user.getEmail()).commit();
+                        editor.putString("username",user.getEmailAddress()).commit();
                         editor.putString("firstname",user.getFirstName()).commit();
                         editor.putString("lastname",user.getLastName()).commit();
                         editor.putString("password",password.getText().toString()).commit();

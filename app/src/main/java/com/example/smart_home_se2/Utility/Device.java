@@ -1,12 +1,16 @@
 package com.example.smart_home_se2.Utility;
 
-public class Device {
-    String deviceName, deviceStatus, deviceId;
+import android.content.Context;
+import android.widget.Toast;
 
-    public Device(String deviceName, String deviceStatus, String deviceId) {
+public class Device {
+    String deviceName, deviceStatus, deviceId,roomId;
+
+    public Device(String deviceName, String deviceStatus, String deviceId,String roomId) {
         this.deviceName = deviceName;
         this.deviceStatus = deviceStatus;
         this.deviceId = deviceId;
+        this.roomId = roomId;
     }
 
     public String getDeviceName() {
@@ -21,12 +25,27 @@ public class Device {
         return deviceStatus;
     }
 
-    public void setDeviceStatus(String deviceStatus) {
-        this.deviceStatus = deviceStatus;
+    public void setDeviceStatus(String deviceStatus, Context context) {
+
+        if(!deviceName.toUpperCase().contains("window".toUpperCase()) && !deviceName.toUpperCase().contains("alarm".toUpperCase()) && !deviceName.toUpperCase().contains("leakage".toUpperCase()) && !deviceName.toUpperCase().contains("Sensor".toUpperCase())) {
+            this.deviceStatus = deviceStatus;
+        }
+        else {
+            Toast.makeText(context, "Not a changeable device", Toast.LENGTH_SHORT).show();
+            return;
+        }
     }
 
     public String getDeviceId() {
         return deviceId;
+    }
+
+    public String getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(String roomId) {
+        this.roomId = roomId;
     }
 
     public void setDeviceId(String deviceId) {

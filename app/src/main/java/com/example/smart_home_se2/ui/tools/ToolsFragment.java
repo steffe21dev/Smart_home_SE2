@@ -40,38 +40,41 @@ public class ToolsFragment extends Fragment {
         toolsViewModel =
                 ViewModelProviders.of(this).get(ToolsViewModel.class);
         final View root = inflater.inflate(R.layout.fragment_tools, container, false);
-        final TextView textView = root.findViewById(R.id.text_tools);
         toolsViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
-
-                firstName = root.findViewById(R.id.editText4);
-                lastName = root.findViewById(R.id.editText5);
-                email = root.findViewById(R.id.editText6);
-                addUser = root.findViewById(R.id.button3);
-
-                addUser.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        String firstName1 = firstName.getText().toString();
-                        String lastName1 = lastName.getText().toString();
-                        String email2 = email.getText().toString();
-
-                        User user = new User(firstName1, lastName1, email2, null);
-                        boolean bFalse = isValid(email2);
-                        if (bFalse == false) {
-                            Toast.makeText(getContext(), "Invalid Email", Toast.LENGTH_SHORT).show();
-                        }
-
-                        System.out.println(user.toString());
-                        APIHandler.getInstance().addUser(user, getContext());
-
-                    }
-                });
             }
         });
+
+
+
+
+        firstName = root.findViewById(R.id.editText4);
+        lastName = root.findViewById(R.id.editText5);
+        email = root.findViewById(R.id.editText6);
+        addUser = root.findViewById(R.id.button3);
+
+        addUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String firstName1 = firstName.getText().toString();
+                String lastName1 = lastName.getText().toString();
+                String email2 = email.getText().toString();
+
+                User user = new User(firstName1, lastName1, email2, null);
+                boolean bFalse = isValid(email2);
+                if (bFalse == false) {
+                    Toast.makeText(getContext(), "Invalid Email", Toast.LENGTH_SHORT).show();
+                }
+
+                System.out.println(user.toString());
+                APIHandler.getInstance().addUser(user, getContext());
+
+            }
+        });
+
+
         return root;
     }
 

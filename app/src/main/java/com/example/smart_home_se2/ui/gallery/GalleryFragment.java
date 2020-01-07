@@ -75,14 +75,15 @@ public class GalleryFragment extends Fragment {
                 if(!device.getDeviceName().contains("temp") && !device.getDeviceName().contains("fan")) {
                     switch (device.getDeviceStatus()) {
                         case "1":
-                            device.setDeviceStatus("0");
+                            device.setDeviceStatus("0",context);
                             break;
                         case "0":
-                            device.setDeviceStatus("1");
+                            device.setDeviceStatus("1",context);
                             break;
 
                         default:
                             Toast.makeText(context, "You can't do this", Toast.LENGTH_SHORT).show();
+                            break;
                     }
                 }
                 else if(device.getDeviceName().contains("temp")) {
@@ -131,12 +132,14 @@ public class GalleryFragment extends Fragment {
                         String deviceId = jsonObject.getString("deviceId");
                         String deviceName = jsonObject.getString("deviceName");
                         String deviceStatus = jsonObject.getString("deviceStatus");
+                        String roomId = jsonObject.getString("roomId");
+
 
                         System.out.println(deviceId);
                         System.out.println(deviceName);
                         System.out.println(deviceStatus);
 
-                        devices.add(new Device(deviceName,deviceStatus,deviceId));
+                        devices.add(new Device(deviceName,deviceStatus,deviceId,roomId));
 
                     } catch (JSONException e) {
                         e.printStackTrace();

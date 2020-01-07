@@ -67,21 +67,31 @@ public class SlideshowFragment extends Fragment {
                 Device device = (Device)listView.getItemAtPosition(position);
 
 
-                switch (device.getDeviceStatus()){
-                    case "1":
-                        device.setDeviceStatus("0");
-                        break;
-                    case "0":
-                        device.setDeviceStatus("1");
-                        break;
+                if(!device.getDeviceName().contains("temp") && !device.getDeviceName().contains("fan")) {
+                    switch (device.getDeviceStatus()) {
+                        case "1":
+                            device.setDeviceStatus("0",context);
+                            break;
+                        case "0":
+                            device.setDeviceStatus("1",context);
+                            break;
 
-                    default:
-                        Toast.makeText(context, "You can't do this", Toast.LENGTH_SHORT).show();
+                        default:
+                            Toast.makeText(context, "You can't do this", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                    APIHandler.getInstance().changeStateDevice(device, context);
+
+                    getDevices(context);
                 }
-                APIHandler.getInstance().changeStateDevice(device,context);
-
-                getDevices(context);
+                else if(device.getDeviceName().contains("temp")) {
+                    Toast.makeText(context, "The temp inside is " + device.getDeviceStatus() +"°", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(context, "Control the fan with the slider below", Toast.LENGTH_SHORT).show();
+                }
             }
+
         });
 
 
@@ -117,12 +127,14 @@ public class SlideshowFragment extends Fragment {
                         String deviceId = jsonObject.getString("deviceId");
                         String deviceName = jsonObject.getString("deviceName");
                         String deviceStatus = jsonObject.getString("deviceStatus");
+                        String roomId = jsonObject.getString("roomId");
+
 
                         System.out.println(deviceId);
                         System.out.println(deviceName);
                         System.out.println(deviceStatus);
 
-                        devices.add(new Device(deviceName,deviceStatus,deviceId));
+                        devices.add(new Device(deviceName,deviceStatus,deviceId,roomId));
 
                     } catch (JSONException e) {
                         e.printStackTrace();

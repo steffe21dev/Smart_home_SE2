@@ -49,28 +49,32 @@ public class APIHandler {
 
 
 
-    public void addUser(User usern, Context context){
+    public void addUser(User usern, final Context context){
         String new_url = url + "users";
 
-        JSONObject object = new JSONObject();
+        final JSONObject jsonObject = new JSONObject();
 
         try {
-            object.put("firstName",usern.getFirstName());
-            object.put("lastName",usern.getLastName());
-            object.put("emailAddress",usern.getEmail());
+            jsonObject.put("firstName",usern.getFirstName());
+            jsonObject.put("lastName",usern.getLastName());
+            jsonObject.put("Email",usern.getEmailAddress());
+
+            System.out.println(jsonObject.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, new_url, object, new Response.Listener<JSONObject>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, new_url, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-
+                System.out.println(response.toString());
+                Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
+                error.printStackTrace();
             }
         });
 
@@ -81,9 +85,9 @@ public class APIHandler {
     // FIXME: 2019-11-02 Implementera byte av lösenord
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void updatePassword(User user1, String newPass, final Context context){
-        String new_url = url + "login/"+user1.getEmail();
+        String new_url = url + "login/"+user1.getEmailAddress();
 
-        final String authString = user1.getEmail() + ":" + user1.getPassword();
+        final String authString = user1.getEmailAddress() + ":" + user1.getPassword();
 
         final String authStringEnc = Base64.getEncoder().encodeToString(authString.getBytes());
 
@@ -92,7 +96,7 @@ public class APIHandler {
         try {
             jsonObject.put("firstName",user1.getFirstName());
             jsonObject.put("lastName",user1.getLastName());
-            jsonObject.put("emailAddress",user1.getEmail());
+            jsonObject.put("emailAddress",user1.getEmailAddress());
             jsonObject.put("password",newPass);
 
         }
@@ -191,12 +195,14 @@ public class APIHandler {
                         String deviceId = jsonObject.getString("deviceId");
                         String deviceName = jsonObject.getString("deviceName");
                         String deviceStatus = jsonObject.getString("deviceStatus");
+                        String roomId = jsonObject.getString("roomId");
+
 
                         System.out.println(deviceId);
                         System.out.println(deviceName);
                         System.out.println(deviceStatus);
 
-                        devices.add(new Device(deviceName,deviceStatus,deviceId));
+                        devices.add(new Device(deviceName,deviceStatus,deviceId,roomId));
 
                     } catch (JSONException e) {
                         e.printStackTrace();

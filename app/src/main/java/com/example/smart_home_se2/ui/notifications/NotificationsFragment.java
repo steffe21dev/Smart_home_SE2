@@ -148,12 +148,14 @@ public class NotificationsFragment extends Fragment {
                         String deviceId = jsonObject.getString("deviceId");
                         String deviceName = jsonObject.getString("deviceName");
                         String deviceStatus = jsonObject.getString("deviceStatus");
+                        String roomId = jsonObject.getString("roomId");
+
 
                         System.out.println(deviceId);
                         System.out.println(deviceName);
                         System.out.println(deviceStatus);
 
-                        devices.add(new Device(deviceName,deviceStatus,deviceId));
+                        devices.add(new Device(deviceName,deviceStatus,deviceId,roomId));
 
                     } catch (JSONException e) {
                         e.printStackTrace();

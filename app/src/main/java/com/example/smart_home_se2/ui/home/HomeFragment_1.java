@@ -86,7 +86,6 @@ public class HomeFragment_1 extends Fragment {
         runnable.run();
 
 
-        initializeListeners(context);
 
 
 
@@ -146,103 +145,5 @@ public class HomeFragment_1 extends Fragment {
     }
 
 
-    private void initializeListeners(final Context context){
 
-        deviceOne.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(!deviceOne.isChecked()){
-                    devices.get(0).setDeviceStatus("0");
-                    devices.get(0).toString();
-                    APIHandler.getInstance().changeStateDevice(devices.get(0),context);
-                }
-                else{
-                    devices.get(0).setDeviceStatus("1");
-                    APIHandler.getInstance().changeStateDevice(devices.get(0),context);
-                }
-            }
-        });
-
-        deviceTwo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(!deviceTwo.isChecked()){
-                    devices.get(1).setDeviceStatus("0");
-                    devices.get(1).toString();
-                    APIHandler.getInstance().changeStateDevice(devices.get(1),context);
-                }
-                else{
-                    devices.get(1).setDeviceStatus("1");
-                    APIHandler.getInstance().changeStateDevice(devices.get(1),context);
-                }
-            }
-        });
-
-        deviceThree.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(!deviceThree.isChecked()){
-                    devices.get(4).setDeviceStatus("0");
-                    devices.get(4).toString();
-                    APIHandler.getInstance().changeStateDevice(devices.get(4),context);
-                }
-                else{
-                    devices.get(4).setDeviceStatus("1");
-                    APIHandler.getInstance().changeStateDevice(devices.get(4),context);
-                }
-            }
-        });
-
-
-
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                devices.get(8).setDeviceStatus(String.valueOf(seekBar.getProgress()));
-
-                APIHandler.getInstance().changeStateDevice(devices.get(8),context);
-            }
-        });
-
-
-        deviceFive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(!deviceFive.isChecked()){
-                    devices.get(12).setDeviceStatus("0");
-                    devices.get(12).toString();
-                    APIHandler.getInstance().changeStateDevice(devices.get(12),context);
-                }
-                else{
-                    devices.get(12).setDeviceStatus("1");
-                    APIHandler.getInstance().changeStateDevice(devices.get(12),context);
-                }
-            }
-        });
-
-        deviceSix.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(!deviceSix.isChecked()){
-                    devices.get(13).setDeviceStatus("0");
-                    devices.get(13).toString();
-                    APIHandler.getInstance().changeStateDevice(devices.get(13),context);
-                }
-                else{
-                    devices.get(13).setDeviceStatus("1");
-                    APIHandler.getInstance().changeStateDevice(devices.get(13),context);
-                }
-            }
-        });
-    }
 }
