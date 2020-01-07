@@ -62,7 +62,7 @@ public class ToolsFragment extends Fragment {
                 String lastName1 = lastName.getText().toString();
                 String email2 = email.getText().toString();
 
-                User user = new User(firstName1, lastName1, email2, null);
+                User user = new User(firstName1, lastName1, email2);
                 boolean bFalse = isValid(email2);
                 if (bFalse == false) {
                     Toast.makeText(getContext(), "Invalid Email", Toast.LENGTH_SHORT).show();

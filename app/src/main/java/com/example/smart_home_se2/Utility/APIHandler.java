@@ -52,19 +52,16 @@ public class APIHandler {
     public void addUser(User usern, final Context context){
         String new_url = url + "users";
 
-        final JSONObject jsonObject = new JSONObject();
 
-        try {
-            jsonObject.put("firstName",usern.getFirstName());
-            jsonObject.put("lastName",usern.getLastName());
-            jsonObject.put("Email",usern.getEmailAddress());
+        System.out.println(new_url);
+        Map<String, String> postParam= new HashMap<String, String>();
+        postParam.put("firstName", usern.getFirstName());
+        postParam.put("lastName", usern.getLastName());
+        postParam.put("emailAddress",usern.getEmailAddress());
 
-            System.out.println(jsonObject.toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, new_url, jsonObject, new Response.Listener<JSONObject>() {
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, new_url, new JSONObject(postParam), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 System.out.println(response.toString());
@@ -73,7 +70,7 @@ public class APIHandler {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
                 error.printStackTrace();
             }
         });
