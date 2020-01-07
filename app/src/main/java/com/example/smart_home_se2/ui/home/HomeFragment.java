@@ -1,19 +1,14 @@
 package com.example.smart_home_se2.ui.home;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.SeekBar;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,11 +19,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.smart_home_se2.R;
 import com.example.smart_home_se2.Utility.APIHandler;
 import com.example.smart_home_se2.Utility.Device;
@@ -48,8 +41,10 @@ public class HomeFragment extends Fragment {
 
 
     Context context;
+    int fanpos;
     ArrayList<Device> devices;
     ArrayAdapter<Device> arrayAdapter;
+    SeekBar seekBar;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -63,7 +58,29 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        seekBar = root.findViewById(R.id.seekBar);
 
+
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                devices.get(fanpos).setDeviceStatus(String.valueOf(seekBar.getProgress()));
+                APIHandler.getInstance().changeStateDevice(devices.get(fanpos),context);
+                System.out.println(devices.get(fanpos).toString());
+                initList();
+            }
+        });
 
 
         listView = root.findViewById(R.id.listview1);
@@ -87,19 +104,23 @@ public class HomeFragment extends Fragment {
                 if(!device.getDeviceName().contains("temp") && !device.getDeviceName().contains("fan")) {
                     switch (device.getDeviceStatus()) {
                         case "1":
-                            device.setDeviceStatus("0",context);
+                            if(device.setDeviceStatus("0",context)) {
+                                ((Device) listView.getItemAtPosition(position)).setDeviceStatus("0");
+                            }
                             break;
                         case "0":
-                            device.setDeviceStatus("1",context);
+                            if(device.setDeviceStatus("1",context)) {
+                                ((Device) listView.getItemAtPosition(position)).setDeviceStatus("1");
+                            }
                             break;
 
                         default:
                             Toast.makeText(context, "You can't do this", Toast.LENGTH_SHORT).show();
                             break;
                     }
+                    initList(position);
                     APIHandler.getInstance().changeStateDevice(device, context);
 
-                    getDevices(context);
                 }
                 else if(device.getDeviceName().contains("temp")) {
                     Toast.makeText(context, "The temp inside is " + device.getDeviceStatus() +"°", Toast.LENGTH_SHORT).show();
@@ -151,11 +172,18 @@ public class HomeFragment extends Fragment {
                         e.printStackTrace();
                     }
 
-
-                    initList();
-
-
                 }
+
+
+
+                for(int i = 0; i < devices.size(); i++){
+                    if(devices.get(i).getDeviceName().toUpperCase().contains("fan".toUpperCase()))
+                        fanpos = i;
+                }
+
+                seekBar.setProgress(Integer.parseInt(devices.get(fanpos).getDeviceStatus()));
+                initList();
+
 
             }
         }, new Response.ErrorListener() {
@@ -168,6 +196,21 @@ public class HomeFragment extends Fragment {
         RequestSingleton.getInstance(context).addToRequestQueue(jsonArrayRequest);
 
 
+    }
+
+
+    public void initList(int position){
+
+
+        arrayAdapter = new ArrayAdapter<>(context,android.R.layout.simple_expandable_list_item_1
+
+                ,devices);
+
+
+
+        listView.setAdapter(arrayAdapter);
+
+        listView.setSelection(position);
     }
 
 

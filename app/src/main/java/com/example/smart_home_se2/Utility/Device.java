@@ -25,14 +25,19 @@ public class Device {
         return deviceStatus;
     }
 
-    public void setDeviceStatus(String deviceStatus, Context context) {
+    public void setDeviceStatus(String deviceStatus) {
+        this.deviceStatus = deviceStatus;
+    }
+
+    public boolean setDeviceStatus(String deviceStatus, Context context) {
 
         if(!deviceName.toUpperCase().contains("window".toUpperCase()) && !deviceName.toUpperCase().contains("alarm".toUpperCase()) && !deviceName.toUpperCase().contains("leakage".toUpperCase()) && !deviceName.toUpperCase().contains("Sensor".toUpperCase())) {
             this.deviceStatus = deviceStatus;
+            return true;
         }
         else {
             Toast.makeText(context, "Not a changeable device", Toast.LENGTH_SHORT).show();
-            return;
+            return false;
         }
     }
 

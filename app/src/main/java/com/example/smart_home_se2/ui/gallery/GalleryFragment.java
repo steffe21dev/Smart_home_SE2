@@ -75,10 +75,14 @@ public class GalleryFragment extends Fragment {
                 if(!device.getDeviceName().contains("temp") && !device.getDeviceName().contains("fan")) {
                     switch (device.getDeviceStatus()) {
                         case "1":
-                            device.setDeviceStatus("0",context);
+                            if(device.setDeviceStatus("0",context)) {
+                                ((Device) listView.getItemAtPosition(position)).setDeviceStatus("0");
+                            }
                             break;
                         case "0":
-                            device.setDeviceStatus("1",context);
+                            if(device.setDeviceStatus("1",context)) {
+                                ((Device) listView.getItemAtPosition(position)).setDeviceStatus("1");
+                            }
                             break;
 
                         default:
@@ -93,9 +97,9 @@ public class GalleryFragment extends Fragment {
                     Toast.makeText(context, "Control the fan with the slider below", Toast.LENGTH_SHORT).show();
                 }
 
+                initList(position);
                 APIHandler.getInstance().changeStateDevice(device,context);
 
-                getDevices(context);
             }
         });
 
@@ -162,6 +166,21 @@ public class GalleryFragment extends Fragment {
         RequestSingleton.getInstance(context).addToRequestQueue(jsonArrayRequest);
 
 
+    }
+
+
+    public void initList(int position){
+
+
+        arrayAdapter = new ArrayAdapter<>(context,android.R.layout.simple_expandable_list_item_1
+
+                ,devices);
+
+
+
+        listView.setAdapter(arrayAdapter);
+
+        listView.setSelection(position);
     }
 
 

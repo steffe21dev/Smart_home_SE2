@@ -41,6 +41,7 @@ public class SlideshowFragment extends Fragment {
 
 
     Context context;
+    int currentpos;
     ArrayList<Device> devices;
     ArrayAdapter<Device> arrayAdapter;
 
@@ -70,19 +71,25 @@ public class SlideshowFragment extends Fragment {
                 if(!device.getDeviceName().contains("temp") && !device.getDeviceName().contains("fan")) {
                     switch (device.getDeviceStatus()) {
                         case "1":
-                            device.setDeviceStatus("0",context);
+                            if(device.setDeviceStatus("0",context)) {
+                                ((Device) listView.getItemAtPosition(position)).setDeviceStatus("0");
+                            }
                             break;
                         case "0":
-                            device.setDeviceStatus("1",context);
+                            if(device.setDeviceStatus("1",context)) {
+                                ((Device) listView.getItemAtPosition(position)).setDeviceStatus("1");
+                            }
                             break;
 
                         default:
                             Toast.makeText(context, "You can't do this", Toast.LENGTH_SHORT).show();
                             break;
                     }
+
+                    currentpos = position;
+                    initList(position);
                     APIHandler.getInstance().changeStateDevice(device, context);
 
-                    getDevices(context);
                 }
                 else if(device.getDeviceName().contains("temp")) {
                     Toast.makeText(context, "The temp inside is " + device.getDeviceStatus() +"°", Toast.LENGTH_SHORT).show();
@@ -157,6 +164,21 @@ public class SlideshowFragment extends Fragment {
         RequestSingleton.getInstance(context).addToRequestQueue(jsonArrayRequest);
 
 
+    }
+
+
+    public void initList(int position){
+
+
+        arrayAdapter = new ArrayAdapter<>(context,android.R.layout.simple_expandable_list_item_1
+
+                ,devices);
+
+
+
+        listView.setAdapter(arrayAdapter);
+
+        listView.setSelection(position);
     }
 
 
